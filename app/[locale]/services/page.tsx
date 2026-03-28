@@ -1,10 +1,8 @@
 'use client';
 
 import Navigation from '@/components/Navigation';
-import PageHero from '@/components/PageHero';
 import Services from '@/components/Services';
 import Process from '@/components/Process';
-import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import CustomCursor from '@/components/CustomCursor';
@@ -218,15 +216,6 @@ export default function ServicesPage() {
     <>
       <Navigation />
       <main className="pt-[72px]">
-        {/* ========================================================== */}
-        {/*  HERO                                                      */}
-        {/* ========================================================== */}
-        <PageHero
-          label="OUR CRAFT"
-          title="Services"
-          subtitle="Three Disciplines. One Standard."
-        />
-
         {/* ========================================================== */}
         {/*  INTRO SECTION                                             */}
         {/* ========================================================== */}
@@ -592,7 +581,6 @@ export default function ServicesPage() {
         {/* ========================================================== */}
         {/*  CTA                                                       */}
         {/* ========================================================== */}
-        <CTASection />
       </main>
       <Footer />
       <WhatsAppFloat />

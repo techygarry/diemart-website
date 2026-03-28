@@ -1,11 +1,7 @@
 'use client';
 
 import Navigation from '@/components/Navigation';
-import PageHero from '@/components/PageHero';
 import Products from '@/components/Products';
-import Stats from '@/components/Stats';
-import CatalogTeaser from '@/components/CatalogTeaser';
-import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import CustomCursor from '@/components/CustomCursor';
@@ -653,19 +649,7 @@ export default function ProductsPage() {
     <>
       <Navigation />
       <main className="pt-[72px]">
-        {/* 1. Hero */}
-        <PageHero
-          label="PRECISION"
-          title="Products"
-          subtitle="6 categories. 3,600+ designs."
-        />
-
-        {/* 2. What We Manufacture */}
-        <WhatWeManufactureSection />
-
-        <GoldDivider variant="diamond" />
-
-        {/* 3. Products (6-card grid component) */}
+        {/* Products (6-card grid component) */}
         <Products />
 
         <GoldDivider variant="dots" />
@@ -678,19 +662,6 @@ export default function ProductsPage() {
         {/* 5. How to Order */}
         <HowToOrderSection />
 
-        <GoldDivider variant="diamond" />
-
-        {/* 6. Stats + CatalogTeaser */}
-        <Stats />
-
-        <GoldDivider variant="dots" />
-
-        <CatalogTeaser />
-
-        <GoldDivider variant="line" />
-
-        {/* 7. CTA + Footer */}
-        <CTASection />
       </main>
       <Footer />
       <WhatsAppFloat />

@@ -415,31 +415,18 @@ export default function Products() {
       />
 
       <div className="relative max-w-[1280px] mx-auto px-6 md:px-10">
-        {/* ── Header Area with Shimmer ── */}
+        {/* ── Header Area ── */}
         <div className="relative text-center mb-20">
           <div className="relative z-10">
             {/* Section label */}
-            <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-xs mb-5">
-              Our Craft
+            <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-base md:text-lg mb-5">
+              {t('label')}
             </p>
-
-            {/* Decorative line with diamond */}
-            <div className="flex items-center justify-center gap-4 mb-8" aria-hidden="true">
-              <div
-                id="products-ornament-left"
-                className="h-[1px] w-16 md:w-24 bg-gradient-to-r from-transparent to-dm-gold-primary/40"
-              />
-              <div className="w-2 h-2 rotate-45 border border-dm-gold-primary/50" />
-              <div
-                id="products-ornament-right"
-                className="h-[1px] w-16 md:w-24 bg-gradient-to-l from-transparent to-dm-gold-primary/40"
-              />
-            </div>
 
             {/* Heading */}
             <h2
               id="products-heading"
-              className="font-cormorant font-semibold text-4xl md:text-5xl lg:text-[3.5rem] text-dm-gold-primary mb-5 leading-tight"
+              className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight"
             >
               {t('heading')}
             </h2>
@@ -447,10 +434,22 @@ export default function Products() {
             {/* Subtext */}
             <p
               id="products-subtext"
-              className="font-cormorant text-dm-white-soft text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+              className="font-cormorant text-dm-white-soft text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed mb-10"
             >
               {t('subtext')}
             </p>
+
+            {/* Stats badges */}
+            <div className="flex flex-wrap justify-center gap-6 mb-4">
+              <div className="flex items-center gap-3 border border-dm-gold-primary/20 bg-dm-black-mid/60 backdrop-blur-sm px-6 py-3 rounded-sm">
+                <span className="font-cormorant font-bold text-3xl md:text-4xl text-dm-gold-primary">{t('stats_categories')}</span>
+                <span className="font-dm-sans text-xs uppercase tracking-[0.15em] text-dm-white-ghost">{t('stats_categories_label')}</span>
+              </div>
+              <div className="flex items-center gap-3 border border-dm-gold-primary/20 bg-dm-black-mid/60 backdrop-blur-sm px-6 py-3 rounded-sm">
+                <span className="font-cormorant font-bold text-3xl md:text-4xl text-dm-gold-primary">{t('stats_designs')}</span>
+                <span className="font-dm-sans text-xs uppercase tracking-[0.15em] text-dm-white-ghost">{t('stats_designs_label')}</span>
+              </div>
+            </div>
           </div>
         </div>
 

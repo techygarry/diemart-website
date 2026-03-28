@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Navigation from '@/components/Navigation';
-import PageHero from '@/components/PageHero';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
@@ -352,12 +351,10 @@ export default function ContactPage() {
     <>
       <Navigation />
       <main className="pt-[72px]">
-        {/* ──────────────── Hero ──────────────── */}
-        <PageHero
-          label="LET'S CONNECT"
-          title="Contact Us"
-          subtitle="We respond within 4 hours"
-        />
+        {/* ──────────────── Contact Form (5-step) ──────────────── */}
+        <section className="bg-dm-black-warm">
+          <Contact />
+        </section>
 
         {/* ──────────────── Get in Touch Section ──────────────── */}
         <section className="bg-dm-black-deep py-20 md:py-28 px-6">
@@ -573,11 +570,6 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ──────────────── Contact Form (5-step) ──────────────── */}
-        <section className="bg-dm-black-warm">
-          <Contact />
-        </section>
-
         {/* ──────────────── Visit Our Factory ──────────────── */}
         <section className="bg-dm-black-deep py-20 md:py-28 px-6">
           <div className="max-w-6xl mx-auto">
@@ -609,7 +601,7 @@ export default function ContactPage() {
             {/* Map placeholder */}
             <div
               className="relative w-full h-[320px] md:h-[400px] rounded-sm border border-dm-black-light
-                         bg-dm-black-mid overflow-hidden mb-12"
+                         bg-dm-black-mid overflow-hidden"
             >
               {/* Dark textured background */}
               <div
@@ -660,44 +652,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Factory stat cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {/* 3 Factories */}
-              <div className="group relative flex flex-col items-center text-center p-8 border border-dm-black-light rounded-sm
-                              bg-dm-black-warm/50 hover:border-dm-gold-primary/30 transition-all duration-300">
-                <div className="mb-4 transition-transform duration-300 group-hover:scale-110">
-                  <IconBuilding />
-                </div>
-                <span className="font-cormorant font-bold text-4xl text-dm-gold-primary mb-1">3</span>
-                <span className="font-dm-sans text-sm text-dm-white-soft uppercase tracking-wider">
-                  Factories
-                </span>
-              </div>
-
-              {/* 100+ Karigars */}
-              <div className="group relative flex flex-col items-center text-center p-8 border border-dm-black-light rounded-sm
-                              bg-dm-black-warm/50 hover:border-dm-gold-primary/30 transition-all duration-300">
-                <div className="mb-4 transition-transform duration-300 group-hover:scale-110">
-                  <IconPeople />
-                </div>
-                <span className="font-cormorant font-bold text-4xl text-dm-gold-primary mb-1">100+</span>
-                <span className="font-dm-sans text-sm text-dm-white-soft uppercase tracking-wider">
-                  Karigars
-                </span>
-              </div>
-
-              {/* 24/7 Operations */}
-              <div className="group relative flex flex-col items-center text-center p-8 border border-dm-black-light rounded-sm
-                              bg-dm-black-warm/50 hover:border-dm-gold-primary/30 transition-all duration-300">
-                <div className="mb-4 transition-transform duration-300 group-hover:scale-110">
-                  <IconClockLarge />
-                </div>
-                <span className="font-cormorant font-bold text-4xl text-dm-gold-primary mb-1">24/7</span>
-                <span className="font-dm-sans text-sm text-dm-white-soft uppercase tracking-wider">
-                  Operations
-                </span>
-              </div>
-            </div>
           </div>
         </section>
 

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { MotionValue } from 'framer-motion';
 
-const TOTAL_FRAMES = 121;
+const TOTAL_FRAMES = 120;
 
 function getFramePaths(mobile: boolean) {
   const dir = mobile ? '/sequence/dis-mobile' : '/sequence/dis';

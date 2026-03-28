@@ -3,10 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Navigation from '@/components/Navigation';
-import PageHero from '@/components/PageHero';
 import Legacy from '@/components/Legacy';
 import About from '@/components/About';
-import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import CustomCursor from '@/components/CustomCursor';
@@ -450,14 +448,8 @@ export default function LegacyPage() {
         {/* ============================================================ */}
         {/*  1. PAGE HERO                                                */}
         {/* ============================================================ */}
-        <PageHero
-          label="HERITAGE"
-          title="Our Legacy"
-          subtitle="From 1980 to the Future"
-        />
-
         {/* ============================================================ */}
-        {/*  2. HERITAGE AT A GLANCE                                     */}
+        {/*  1. HERITAGE AT A GLANCE                                     */}
         {/* ============================================================ */}
         <section
           ref={heritageRef as React.RefObject<HTMLElement>}
@@ -498,77 +490,12 @@ export default function LegacyPage() {
         </section>
 
         {/* ============================================================ */}
-        {/*  3. THE FOUNDER'S JOURNEY                                    */}
+        {/*  2. OUR STORY (The Man Behind the Metal)                     */}
         {/* ============================================================ */}
-        <section
-          ref={founderRef as React.RefObject<HTMLElement>}
-          className="relative bg-dm-black-warm py-24 md:py-32 overflow-hidden"
-          aria-labelledby="founder-journey-heading"
-        >
-          {/* Decorative corner elements */}
-          <div className="absolute top-8 left-8 w-16 h-16 border-t border-l border-dm-gold-primary/10 pointer-events-none" aria-hidden="true" />
-          <div className="absolute bottom-8 right-8 w-16 h-16 border-b border-r border-dm-gold-primary/10 pointer-events-none" aria-hidden="true" />
-
-          <div className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-12">
-            <SectionHeading
-              label="THE STORY"
-              title="The Founder&rsquo;s Journey"
-            />
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Image */}
-              <div>
-                <FounderImage />
-              </div>
-
-              {/* Text */}
-              <div>
-                <p className="font-cormorant text-lg md:text-xl leading-relaxed text-dm-white-soft mb-8">
-                  The story of Die Mart does not begin in a boardroom. It begins in the narrow
-                  lanes of Kurla, Mumbai, where Elyas Nagavadria first held a chisel at the age of
-                  fourteen. What started as a family trade became a lifelong obsession with
-                  precision. For over four decades, the Nagavadria family has shaped the dies that
-                  shape India&rsquo;s gold jewellery \u2014 from temple designs to modern geometric
-                  patterns, from hand-carved masters to CNC-engraved moulds.
-                </p>
-
-                <p className="font-cormorant text-lg md:text-xl leading-relaxed text-dm-white-soft mb-8">
-                  In 2022, Hussain Nagavadria \u2014 Elyas&rsquo;s son \u2014 formalised this
-                  legacy into Die Mart. He brought digital cataloguing, modern machinery, and a
-                  relentless drive for quality that the next generation of jewellers demands. Today,
-                  Die Mart operates three factories, employs over 100 master karigars, and has an
-                  archive of 3,600+ original designs.
-                </p>
-
-                {/* Gold divider */}
-                <div className="flex items-center gap-3 mb-8" aria-hidden="true">
-                  <span
-                    className="block h-px flex-1"
-                    style={{
-                      background:
-                        'linear-gradient(to right, #D4AF37, transparent)',
-                    }}
-                  />
-                  <span className="block w-1.5 h-1.5 rotate-45 bg-dm-gold-primary/60" />
-                </div>
-
-                {/* Quote */}
-                <blockquote className="relative pl-6 border-l-2 border-dm-gold-primary/30">
-                  <p className="font-cormorant italic text-xl md:text-2xl text-dm-gold-muted leading-relaxed">
-                    &ldquo;A die is not just a tool. It is the first impression a jeweller makes on
-                    gold. We make sure that impression is perfect.&rdquo;
-                  </p>
-                  <footer className="mt-4 font-dm-sans text-sm text-dm-white-ghost uppercase tracking-wider">
-                    &mdash; Hussain Nagavadria, Founder
-                  </footer>
-                </blockquote>
-              </div>
-            </div>
-          </div>
-        </section>
+        <About />
 
         {/* ============================================================ */}
-        {/*  4. LEGACY TIMELINE (component)                              */}
+        {/*  3. LEGACY TIMELINE (component)                              */}
         {/* ============================================================ */}
         <Legacy />
 
@@ -624,15 +551,6 @@ export default function LegacyPage() {
           </div>
         </section>
 
-        {/* ============================================================ */}
-        {/*  6. ABOUT (component — founder detail)                       */}
-        {/* ============================================================ */}
-        <About />
-
-        {/* ============================================================ */}
-        {/*  7. CTA + FOOTER + FLOATING ELEMENTS                        */}
-        {/* ============================================================ */}
-        <CTASection />
       </main>
 
       <Footer />

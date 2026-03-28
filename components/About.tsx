@@ -116,20 +116,20 @@ export default function About() {
 
   return (
     <section
-      id="about"
+      id="story"
       className="py-[120px] bg-dm-black-deep"
       aria-labelledby="about-heading"
     >
       <div className="max-w-[1280px] mx-auto px-6">
         {/* Section label */}
-        <p className="font-dm-sans font-light uppercase tracking-[0.25em] text-dm-gold-muted text-sm md:text-base mb-6">
+        <p className="font-dm-sans font-light uppercase tracking-[0.25em] text-dm-gold-muted text-base md:text-lg mb-6">
           {t('label')}
         </p>
 
-        {/* Heading - character stagger via animateHeading */}
+        {/* Heading */}
         <h2
           id="about-heading"
-          className="font-cormorant font-semibold text-4xl md:text-5xl lg:text-6xl text-dm-gold-primary mb-16 leading-tight"
+          className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-16 leading-tight"
         >
           {t('heading')}
         </h2>
@@ -147,21 +147,21 @@ export default function About() {
             <div className="ps-6 md:ps-8 space-y-8 bg-dm-black-deep/40 backdrop-blur-sm rounded-lg p-6 md:p-8">
               <p
                 id="about-p1"
-                className="font-cormorant text-lg md:text-xl text-dm-white-warm font-light leading-relaxed"
+                className="font-cormorant text-xl md:text-2xl text-dm-white-warm font-light leading-relaxed"
               >
                 {t('p1')}
               </p>
 
               <p
                 id="about-p2"
-                className="font-cormorant text-lg md:text-xl text-dm-white-warm font-light leading-relaxed"
+                className="font-cormorant text-xl md:text-2xl text-dm-white-warm font-light leading-relaxed"
               >
                 {t('p2')}
               </p>
 
               <p
                 id="about-p3"
-                className="font-cormorant text-lg md:text-xl text-dm-white-warm font-light leading-relaxed"
+                className="font-cormorant text-xl md:text-2xl text-dm-white-warm font-light leading-relaxed"
               >
                 {t('p3')}
               </p>
@@ -176,7 +176,7 @@ export default function About() {
               {/* Closing line */}
               <p
                 id="about-closing"
-                className="font-cormorant text-lg md:text-xl text-dm-white-warm font-light leading-relaxed"
+                className="font-cormorant text-xl md:text-2xl text-dm-white-warm font-light leading-relaxed"
               >
                 {t('closing')}
               </p>
@@ -191,44 +191,20 @@ export default function About() {
             </div>
 
             {/* Caption: Founder name + quote */}
-            <div className="text-center space-y-3">
-              <p className="font-cormorant-sc text-xl tracking-widest text-dm-gold-primary">
+            <div className="text-center space-y-4">
+              <p className="font-cormorant-sc text-2xl md:text-3xl tracking-widest text-dm-gold-primary">
                 Elyas Nagavadria
               </p>
-              <p className="font-dm-sans text-xs uppercase tracking-[0.2em] text-dm-white-ghost">
+              <p className="font-dm-sans text-sm uppercase tracking-[0.2em] text-dm-white-ghost">
                 Founder
               </p>
-              <p className="font-cormorant italic text-lg text-dm-gold-muted/80 leading-relaxed max-w-sm mx-auto pt-2">
+              <p className="font-cormorant italic text-xl md:text-2xl text-dm-gold-muted/80 leading-relaxed max-w-md mx-auto pt-3">
                 {t('quote')}
               </p>
-            </div>
-
-            {/* Floating stats mini-bar */}
-            <div
-              id="about-stats-bar"
-              className="flex items-center justify-center gap-0 border border-dm-gold-primary/15 bg-dm-black-mid/60 backdrop-blur-sm py-4 px-6 rounded-sm"
-            >
-              <span className="font-cormorant text-base md:text-lg text-dm-gold-primary whitespace-nowrap">
-                Since 1980
-              </span>
-              <span className="mx-4 md:mx-6 w-px h-5 bg-dm-gold-primary/30" aria-hidden="true" />
-              <span className="font-cormorant text-base md:text-lg text-dm-gold-primary whitespace-nowrap">
-                3 Factories
-              </span>
-              <span className="mx-4 md:mx-6 w-px h-5 bg-dm-gold-primary/30" aria-hidden="true" />
-              <span className="font-cormorant text-base md:text-lg text-dm-gold-primary whitespace-nowrap">
-                100+ Karigars
-              </span>
             </div>
           </div>
         </div>
 
-        {/* Gold divider line (hidden since we moved to two-column layout) */}
-        <div
-          id="about-divider"
-          className="h-[1px] bg-dm-gold-primary/30 my-12 max-w-[800px] sr-only"
-          aria-hidden="true"
-        />
       </div>
     </section>
   );

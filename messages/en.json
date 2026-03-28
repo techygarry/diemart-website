@@ -3,6 +3,7 @@
     "craft": "Craft",
     "about": "About",
     "services": "Services",
+    "3d_viewer": "3D Viewer",
     "legacy": "Legacy",
     "products": "Products",
     "contact": "Contact"
@@ -10,18 +11,18 @@
   "hero": {
     "location": "CHINCHANI \u00b7 TARAPUR \u00b7 MAHARASHTRA",
     "title": "DIE MART",
-    "tagline": "The Die Behind Every Jewellery",
+    "tagline": "Engineering the Dies That Shape India\u2019s Jewellery",
     "stats": "Est. 2022 \u00b7 3 Factories \u00b7 3,600+ Designs \u00b7 10 Lakh+ Dies",
-    "cta_explore": "Explore Our Craft",
+    "cta_explore": "View Our Dies",
     "cta_contact": "Get in Touch",
-    "established": "Established 2022 \u00b7 Rooted in craft since 1980",
+    "established": "3 Factories \u00b7 3,600+ Designs \u00b7 10 Lakh+ Dies Manufactured",
     "scroll": "SCROLL TO DISCOVER",
     "beat_origin_title": "ORIGIN",
     "beat_origin": "Elyas Nagavadria began his journey in 1980. From the slums of Kurla to the workshops of Chinchani \u2014 a man who started with nothing and built everything.",
     "beat_craft_title": "CRAFT",
     "beat_craft": "One machine. One promise. Three factories. 100+ karigars. Every die that leaves our hands carries the weight of four decades of precision.",
-    "beat_die_title": "THE DIE",
-    "beat_die": "Fully exploded. Every component visible \u2014 base plate, emboss punch, cutting punch, cavity, screws. Wirecut machining. Master embossing. Quality testing. 3,600+ designs.",
+    "beat_die_title": "ANATOMY OF PRECISION",
+    "beat_die": "Base plate. Cutting punch. Emboss punch. Cavity. Five components, machined to micron tolerances, assembled into one tool that stamps thousands of jewellery pieces without losing a single detail.",
     "beat_revolution_title": "REVOLUTION",
     "beat_revolution": "In 2022, Hussain Nagavadria established Die Mart as a brand. AI-powered catalogs. Digital tracking. The only manufacturer in the world building this future.",
     "beat_world_title": "THE WORLD",
@@ -102,8 +103,13 @@
     "closing_quote": "Rooted in Craft. Driven by Intelligence."
   },
   "products": {
-    "heading": "Precision in Every Press",
-    "subtext": "6 categories. 3,600+ designs. One standard of excellence.",
+    "label": "WHAT WE MANUFACTURE",
+    "heading": "Precision in Every Piece",
+    "subtext": "We manufacture over 30 types of jewellery dies using the most advanced CNC machinery and AI-integrated systems in the industry. 25,000+ designs in archive.",
+    "stats_categories": "30+",
+    "stats_categories_label": "Die Categories",
+    "stats_designs": "25,000+",
+    "stats_designs_label": "Designs in Archive",
     "bangle_name": "Bangle Die",
     "bangle_cat": "Traditional",
     "bangle_desc": "The foundation of Indian jewellery manufacturing. Precision-cut bangle dies for every diameter and pattern.",
@@ -121,7 +127,7 @@
     "emboss_desc": "Three-dimensional relief patterns that add depth and texture to every piece of jewellery.",
     "custom_name": "Custom Die",
     "custom_cat": "Bespoke",
-    "custom_desc": "Bring any design to life. Custom dies manufactured to exact specifications with 7-day turnaround."
+    "custom_desc": "Bring any design to life. Custom dies manufactured to your exact specifications with 7-day turnaround."
   },
   "stats": {
     "heading": "Built Over Decades. Measured in Millions.",
