@@ -57,13 +57,13 @@ export default function Hero() {
 
   const progressWidth = useTransform(smoothProgress, [0, 1], ['0%', '100%']);
 
-  const beatNumber = useTransform(smoothProgress, (v: number) => {
+  const beatNumber = useTransform(smoothProgress, (v: number): string => {
     if (v < 0.30) return '';
     if (v < 0.65) return '01';
     return '02';
   });
 
-  const beatLabel = useTransform(smoothProgress, (v: number) => {
+  const beatLabel = useTransform(smoothProgress, (v: number): string => {
     if (v < 0.30) return '';
     if (v < 0.65) return 'THE DIE';
     return 'YOUR DIE';
