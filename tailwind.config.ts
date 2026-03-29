@@ -3,12 +3,26 @@ import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        'dm-black': { deep: '#080704', warm: '#0F0D06', mid: '#1A1508', light: '#2A2010' },
-        'dm-gold': { primary: '#D4AF37', bright: '#F0CC55', muted: '#A8891E' },
-        'dm-white': { warm: '#F5F0E8', soft: 'rgba(245,240,232,0.7)', ghost: 'rgba(245,240,232,0.35)' },
+        'dm-black': {
+          deep: 'var(--black-deep)',
+          warm: 'var(--black-warm)',
+          mid: 'var(--black-mid)',
+          light: 'var(--black-light)',
+        },
+        'dm-gold': {
+          primary: 'var(--gold-primary)',
+          bright: 'var(--gold-bright)',
+          muted: 'var(--gold-muted)',
+        },
+        'dm-white': {
+          warm: 'var(--white-warm)',
+          soft: 'var(--white-soft)',
+          ghost: 'var(--white-ghost)',
+        },
       },
       fontFamily: {
         'cormorant-sc': ['var(--font-cormorant-sc)', 'serif'],

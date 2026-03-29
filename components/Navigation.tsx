@@ -3,7 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeToggle from '@/components/ThemeToggle';
 import { BRAND } from '@/lib/brand';
 
 const NAV_SECTIONS = [
@@ -18,8 +20,13 @@ export default function Navigation() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
+  const { theme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && theme === 'dark';
 
   // Determine if we're on the homepage (pathname is just /<locale> or /<locale>/)
   const isHomePage = pathname === `/${locale}` || pathname === `/${locale}/`;
@@ -98,7 +105,7 @@ export default function Navigation() {
             className="transition-opacity duration-[var(--duration-hover)] hover:opacity-80"
             aria-label="Die Mart - Back to top"
           >
-            <img src="/logo.png" alt="Die Mart" className="h-10 md:h-12 w-auto" />
+            <img src="/logo.png" alt="Die Mart" className={`h-10 md:h-12 w-auto transition-all duration-300 ${isDark ? 'invert brightness-200' : ''}`} />
           </a>
 
           {/* Desktop nav links */}
@@ -128,8 +135,9 @@ export default function Navigation() {
             ))}
           </ul>
 
-          {/* Desktop right: Language + CTA */}
+          {/* Desktop right: Theme + Language + CTA */}
           <div className="hidden lg:flex items-center gap-5">
+            <ThemeToggle />
             <LanguageSwitcher />
             <a
               href={`/${locale}/contact`}
@@ -210,8 +218,9 @@ export default function Navigation() {
           </ul>
 
           <div className="mt-auto flex flex-col gap-5">
-            {/* Language switcher in mobile */}
-            <div className="border-t border-dm-gold-muted/10 pt-5">
+            {/* Theme toggle + Language switcher in mobile */}
+            <div className="border-t border-dm-gold-muted/10 pt-5 flex items-center gap-4">
+              <ThemeToggle />
               <LanguageSwitcher />
             </div>
 

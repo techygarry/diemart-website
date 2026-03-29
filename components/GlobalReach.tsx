@@ -3,6 +3,7 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
+import { useTheme } from 'next-themes';
 import * as THREE from 'three';
 
 /* ─────────────────── Pin Data ─────────────────── */
@@ -64,7 +65,7 @@ function latLngToVector3(lat: number, lng: number, radius: number): THREE.Vector
 // Highlighted countries
 const HIGHLIGHT_COUNTRIES = new Set(['India', 'Italy', 'United Arab Emirates']);
 
-function Globe() {
+function Globe({ isDark }: { isDark: boolean }) {
   const globeRef = useRef<THREE.Group>(null);
   const [countryLines, setCountryLines] = useState<{ points: THREE.Vector3[]; highlight: boolean }[]>([]);
 
@@ -151,15 +152,15 @@ function Globe() {
 
   return (
     <group ref={globeRef}>
-      {/* Globe sphere — visible with gold tint */}
+      {/* Globe sphere */}
       <mesh>
         <sphereGeometry args={[1.98, 64, 64]} />
         <meshPhysicalMaterial
-          color="#1a1510"
-          metalness={0.4}
-          roughness={0.6}
+          color={isDark ? '#1a1510' : '#F5F0E8'}
+          metalness={isDark ? 0.4 : 0.15}
+          roughness={isDark ? 0.6 : 0.7}
           transparent
-          opacity={0.9}
+          opacity={isDark ? 0.9 : 0.95}
         />
       </mesh>
 
@@ -174,7 +175,7 @@ function Globe() {
               itemSize={3}
             />
           </bufferGeometry>
-          <lineBasicMaterial color="#D4AF37" transparent opacity={0.06} />
+          <lineBasicMaterial color="#B8941E" transparent opacity={0.12} />
         </line>
       ))}
 
@@ -190,9 +191,9 @@ function Globe() {
             />
           </bufferGeometry>
           <lineBasicMaterial
-            color={line.highlight ? '#D4AF37' : '#8B7535'}
+            color={line.highlight ? '#B8941E' : '#8B7535'}
             transparent
-            opacity={line.highlight ? 0.7 : 0.2}
+            opacity={line.highlight ? 0.8 : 0.35}
           />
         </line>
       ))}
@@ -206,7 +207,7 @@ function Globe() {
       {/* Outer atmosphere glow */}
       <mesh>
         <sphereGeometry args={[2.08, 64, 64]} />
-        <meshBasicMaterial color="#D4AF37" transparent opacity={0.04} side={THREE.BackSide} />
+        <meshBasicMaterial color="#D4AF37" transparent opacity={0.08} side={THREE.BackSide} />
       </mesh>
 
       {/* Pins */}
@@ -252,8 +253,8 @@ function Globe() {
               distanceFactor={8}
               style={{ pointerEvents: 'none' }}
             >
-              <div className="whitespace-nowrap px-2 py-0.5 rounded-sm bg-[#0a0908]/80 backdrop-blur-sm border border-[#D4AF37]/20">
-                <span className="text-[10px] font-sans tracking-wider text-[#D4AF37] uppercase">
+              <div className={`whitespace-nowrap px-2 py-0.5 rounded-sm backdrop-blur-sm border shadow-sm ${isDark ? 'bg-[#0a0908]/80 border-[#D4AF37]/20' : 'bg-white/80 border-[#B8941E]/30'}`}>
+                <span className={`text-[10px] font-sans tracking-wider uppercase ${isDark ? 'text-[#D4AF37]' : 'text-[#8A6D14]'}`}>
                   {pin.type === 'hq' ? '★ ' : ''}{pin.name}
                 </span>
               </div>
@@ -276,7 +277,11 @@ const COUNTRY_STATS = [
 /* ─────────────────── Main Component ─────────────────── */
 
 export default function GlobalReach() {
+  const { theme } = useTheme();
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && theme === 'dark';
 
   return (
     <section
@@ -326,13 +331,13 @@ export default function GlobalReach() {
               dpr={[1, 2]}
               gl={{ antialias: true }}
             >
-              <color attach="background" args={['#0f0d06']} />
+              <color attach="background" args={[isDark ? '#0f0d06' : '#FAF8F5']} />
               <ambientLight intensity={0.8} />
               <pointLight position={[5, 5, 5]} intensity={1.5} color="#D4AF37" />
               <pointLight position={[-5, -3, -5]} intensity={0.6} color="#B8962E" />
               <pointLight position={[0, 5, 0]} intensity={0.5} color="#ffffff" />
 
-              <Globe />
+              <Globe isDark={isDark} />
 
               <OrbitControls
                 enablePan={false}

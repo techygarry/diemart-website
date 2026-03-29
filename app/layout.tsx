@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cormorant_SC, Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { SEO } from '@/lib/brand';
+import ThemeProvider from '@/components/ThemeProvider';
 
 const cormorantSC = Cormorant_SC({
   subsets: ['latin'],
@@ -53,7 +54,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${cormorantSC.variable} ${cormorantGaramond.variable} ${dmSans.variable} antialiased`}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

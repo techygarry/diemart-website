@@ -69,22 +69,24 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
       ctx.scale(dpr, dpr);
     }
 
-    // Clear and draw with object-fit: contain behavior
+    // Clear and draw with object-fit: cover behavior (fills entire viewport)
     ctx.clearRect(0, 0, w, h);
     const imgAspect = img.naturalWidth / img.naturalHeight;
     const canvasAspect = w / h;
     let drawW: number, drawH: number, drawX: number, drawY: number;
 
     if (imgAspect > canvasAspect) {
-      drawW = w;
-      drawH = w / imgAspect;
-      drawX = 0;
-      drawY = (h - drawH) / 2;
-    } else {
+      // Image is wider — scale to fill height, crop sides
       drawH = h;
       drawW = h * imgAspect;
       drawX = (w - drawW) / 2;
       drawY = 0;
+    } else {
+      // Image is taller — scale to fill width, crop top/bottom
+      drawW = w;
+      drawH = w / imgAspect;
+      drawX = 0;
+      drawY = (h - drawH) / 2;
     }
 
     ctx.drawImage(img, drawX, drawY, drawW, drawH);
