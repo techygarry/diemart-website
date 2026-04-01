@@ -453,17 +453,21 @@ export default function Contact() {
         </div>
 
         {/* ── Navigation buttons ── */}
-        {step > 1 && (
+        {step >= 1 && (
           <div className="flex items-center justify-between mt-10">
-            <button
-              type="button"
-              onClick={handleBack}
-              disabled={animating}
-              className="font-dm-sans text-dm-white-soft hover:text-dm-white-warm
-                         transition-colors duration-300 min-h-[48px] px-4 py-3"
-            >
-              {t('back')}
-            </button>
+            {step > 1 ? (
+              <button
+                type="button"
+                onClick={handleBack}
+                disabled={animating}
+                className="font-dm-sans text-dm-white-soft hover:text-dm-white-warm
+                           transition-colors duration-300 min-h-[48px] px-4 py-3"
+              >
+                {t('back')}
+              </button>
+            ) : (
+              <span />
+            )}
 
             {step < TOTAL_STEPS ? (
               <button

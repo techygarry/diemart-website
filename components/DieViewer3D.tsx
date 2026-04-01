@@ -6,6 +6,7 @@ import { OrbitControls, Stage, useProgress, Html } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
+import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 
 /* ─────────────────── Model Data ─────────────────── */
 
@@ -157,40 +158,42 @@ export default function DieViewer3D() {
             </span>
           </div>
 
-          <Canvas
-            shadows
-            dpr={[1, 2]}
-            camera={{ position: [0, 2, 6], fov: 40 }}
-            gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
-          >
-            <color attach="background" args={['#0a0908']} />
-            <fog attach="fog" args={['#0a0908', 8, 20]} />
+          <WebGLErrorBoundary>
+            <Canvas
+              shadows
+              dpr={[1, 2]}
+              camera={{ position: [0, 2, 6], fov: 40 }}
+              gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
+            >
+              <color attach="background" args={['#0a0908']} />
+              <fog attach="fog" args={['#0a0908', 8, 20]} />
 
-            <Suspense fallback={<Loader />}>
-              <Stage
-                intensity={0.6}
-                environment="city"
-                shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
-                adjustCamera={false}
-              >
-                <STLModel
-                  key={MODELS[activeModel].file}
-                  url={MODELS[activeModel].file}
-                />
-              </Stage>
-            </Suspense>
+              <Suspense fallback={<Loader />}>
+                <Stage
+                  intensity={0.6}
+                  environment="city"
+                  shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
+                  adjustCamera={false}
+                >
+                  <STLModel
+                    key={MODELS[activeModel].file}
+                    url={MODELS[activeModel].file}
+                  />
+                </Stage>
+              </Suspense>
 
-            <OrbitControls
-              enablePan={false}
-              enableZoom={true}
-              minDistance={3}
-              maxDistance={12}
-              autoRotate
-              autoRotateSpeed={1.5}
-              maxPolarAngle={Math.PI / 1.8}
-              minPolarAngle={Math.PI / 6}
-            />
-          </Canvas>
+              <OrbitControls
+                enablePan={false}
+                enableZoom={true}
+                minDistance={3}
+                maxDistance={12}
+                autoRotate
+                autoRotateSpeed={1.5}
+                maxPolarAngle={Math.PI / 1.8}
+                minPolarAngle={Math.PI / 6}
+              />
+            </Canvas>
+          </WebGLErrorBoundary>
         </div>
 
         {/* Bottom info bar */}

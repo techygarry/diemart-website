@@ -22,7 +22,11 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   // Preload all frames
   useEffect(() => {
@@ -69,24 +73,32 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
       ctx.scale(dpr, dpr);
     }
 
-    // Clear and draw with object-fit: cover behavior (fills entire viewport)
     ctx.clearRect(0, 0, w, h);
     const imgAspect = img.naturalWidth / img.naturalHeight;
     const canvasAspect = w / h;
     let drawW: number, drawH: number, drawX: number, drawY: number;
 
-    if (imgAspect > canvasAspect) {
-      // Image is wider — scale to fill height, crop sides
-      drawH = h;
-      drawW = h * imgAspect;
-      drawX = (w - drawW) / 2;
-      drawY = 0;
-    } else {
-      // Image is taller — scale to fill width, crop top/bottom
+    const mobile = w < 768;
+
+    if (mobile) {
+      // Mobile: contain — show full frame, center vertically in upper portion
       drawW = w;
       drawH = w / imgAspect;
       drawX = 0;
-      drawY = (h - drawH) / 2;
+      drawY = h * 0.08; // push down slightly from top to leave room for nav
+    } else {
+      // Desktop: cover — fill entire viewport
+      if (imgAspect > canvasAspect) {
+        drawH = h;
+        drawW = h * imgAspect;
+        drawX = (w - drawW) / 2;
+        drawY = 0;
+      } else {
+        drawW = w;
+        drawH = w / imgAspect;
+        drawX = 0;
+        drawY = (h - drawH) / 2;
+      }
     }
 
     ctx.drawImage(img, drawX, drawY, drawW, drawH);

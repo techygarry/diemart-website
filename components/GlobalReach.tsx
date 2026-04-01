@@ -5,6 +5,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { useTheme } from 'next-themes';
 import * as THREE from 'three';
+import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 
 /* ─────────────────── Pin Data ─────────────────── */
 
@@ -326,27 +327,29 @@ export default function GlobalReach() {
               aria-hidden="true"
             />
 
-            <Canvas
-              camera={{ position: [0, 1.5, 6], fov: 38 }}
-              dpr={[1, 2]}
-              gl={{ antialias: true }}
-            >
-              <color attach="background" args={[isDark ? '#0f0d06' : '#FAF8F5']} />
-              <ambientLight intensity={0.8} />
-              <pointLight position={[5, 5, 5]} intensity={1.5} color="#D4AF37" />
-              <pointLight position={[-5, -3, -5]} intensity={0.6} color="#B8962E" />
-              <pointLight position={[0, 5, 0]} intensity={0.5} color="#ffffff" />
+            <WebGLErrorBoundary>
+              <Canvas
+                camera={{ position: [0, 1.5, 6], fov: 38 }}
+                dpr={[1, 2]}
+                gl={{ antialias: true }}
+              >
+                <color attach="background" args={[isDark ? '#0f0d06' : '#FAF8F5']} />
+                <ambientLight intensity={0.8} />
+                <pointLight position={[5, 5, 5]} intensity={1.5} color="#D4AF37" />
+                <pointLight position={[-5, -3, -5]} intensity={0.6} color="#B8962E" />
+                <pointLight position={[0, 5, 0]} intensity={0.5} color="#ffffff" />
 
-              <Globe isDark={isDark} />
+                <Globe isDark={isDark} />
 
-              <OrbitControls
-                enablePan={false}
-                enableZoom={false}
-                autoRotate={false}
-                maxPolarAngle={Math.PI / 1.5}
-                minPolarAngle={Math.PI / 4}
-              />
-            </Canvas>
+                <OrbitControls
+                  enablePan={false}
+                  enableZoom={false}
+                  autoRotate={false}
+                  maxPolarAngle={Math.PI / 1.5}
+                  minPolarAngle={Math.PI / 4}
+                />
+              </Canvas>
+            </WebGLErrorBoundary>
           </div>
 
           {/* Country cards */}

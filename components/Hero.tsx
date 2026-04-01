@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { motion, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useScrollProgress } from '@/lib/hooks/useScrollProgress';
@@ -12,15 +12,11 @@ import ScrollSequence from '@/components/canvas/ScrollSequence';
 export default function Hero() {
   const t = useTranslations('hero');
   const { ref, smoothProgress } = useScrollProgress();
-  const hasAnimated = useRef(false);
-
   // GSAP staggered entrance for Beat 1
   useEffect(() => {
-    if (hasAnimated.current) return;
-    hasAnimated.current = true;
     const tl = animateHeroOverlay();
     return () => {
-      tl.kill();
+      tl.revert();
     };
   }, []);
 
@@ -158,21 +154,21 @@ export default function Hero() {
 
         {/* ═══ BEAT 1: Brand Intro ═══ */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center z-30"
+          className="absolute inset-0 flex flex-col items-center justify-end md:justify-center px-4 md:px-6 pb-6 md:pb-0 text-center z-30"
           style={{ opacity: beat1Opacity, y: beat1Y }}
         >
-          <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl px-8 py-10 md:px-16 md:py-14">
-            <p className="hero-location font-dm-sans font-light uppercase text-white/60 text-xs md:text-sm tracking-[0.25em] mb-6">
+          <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl px-6 py-8 md:px-16 md:py-14">
+            <p className="hero-location font-dm-sans font-light uppercase text-white/60 text-[10px] md:text-sm tracking-[0.25em] mb-4 md:mb-6">
               {t('location')}
             </p>
-            <h1 className="hero-title font-cormorant-sc font-bold text-[48px] md:text-[80px] lg:text-[96px] text-white leading-none mb-4" style={textShadowStyle}>
+            <h1 className="hero-title font-cormorant-sc font-bold text-[36px] md:text-[80px] lg:text-[96px] text-white leading-none mb-3 md:mb-4" style={textShadowStyle}>
               {t('title')}
             </h1>
-            <p className="hero-tagline font-cormorant italic text-[#D4AF37] text-xl md:text-3xl mb-8" style={textShadowStyle}>
+            <p className="hero-tagline font-cormorant italic text-[#D4AF37] text-base md:text-3xl mb-5 md:mb-8" style={textShadowStyle}>
               {t('tagline')}
             </p>
-            <div className="w-20 h-px bg-[#D4AF37]/40 mb-8 mx-auto" aria-hidden="true" />
-            <p className="hero-established font-dm-sans font-light text-white/50 text-xs md:text-sm tracking-wider mb-10">
+            <div className="w-16 md:w-20 h-px bg-[#D4AF37]/40 mb-5 md:mb-8 mx-auto" aria-hidden="true" />
+            <p className="hero-established font-dm-sans font-light text-white/50 text-[10px] md:text-sm tracking-wider mb-6 md:mb-10">
               {t('established')}
             </p>
             <ScrollIndicator />
@@ -181,7 +177,7 @@ export default function Hero() {
 
         {/* ═══ BEAT 2: The Die (exploded) ═══ */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-start justify-center ps-6 md:ps-16 lg:ps-24 pe-6 z-30"
+          className="absolute inset-0 flex flex-col items-start justify-end md:justify-center ps-4 md:ps-16 lg:ps-24 pe-4 md:pe-6 pb-16 md:pb-0 z-30"
           style={{ opacity: beat2Opacity }}
         >
           <div className={`max-w-lg ${beatCardStyle}`}>
@@ -201,7 +197,7 @@ export default function Hero() {
 
         {/* ═══ BEAT 3: Your Die (reassembled + CTA) ═══ */}
         <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center px-6 md:px-16 text-center z-30"
+          className="absolute inset-0 flex flex-col items-center justify-end md:justify-center px-4 md:px-16 pb-16 md:pb-0 text-center z-30"
           style={{ opacity: beat3Opacity }}
         >
           <div className={`max-w-2xl ${beatCardStyle} text-center`}>
