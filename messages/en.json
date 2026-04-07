@@ -4,7 +4,6 @@
     "about": "About",
     "services": "Services",
     "3d_viewer": "3D Viewer",
-    "legacy": "Legacy",
     "products": "Products",
     "contact": "Contact"
   },
@@ -79,28 +78,6 @@
     "step5_desc": "Machines execute. Components machined in sequence. Die goes to embossing \u2014 hand, engraving, or laser.",
     "step6_title": "TESTED & DISPATCHED",
     "step6_desc": "Three-point quality test. Pass: dispatched with WhatsApp confirmation. Fail: repaired and re-tested. It leaves only when it is right."
-  },
-  "legacy": {
-    "heading": "Rooted in Craft",
-    "beat1_year": "1980",
-    "beat1_heading": "A Craft Begins",
-    "beat1_body": "Elyas Nagavadria begins his journey in the jewellery die craft. Starting from Kurla, Mumbai, he learns the trade through hands-on work \u2014 carrying parcels between Kurla and Chinchani, watching karigars work their machines.",
-    "beat2_year": "1995",
-    "beat2_heading": "Growing With Gold",
-    "beat2_body": "Years of discipline and craft mastery pay off. Elyas expands operations in Chinchani. Karigar count grows steadily. Flower dies and emboss dies join the catalog alongside bangle dies.",
-    "beat3_year": "2008",
-    "beat3_heading": "The CNC Revolution",
-    "beat3_body": "Elyas invests in CNC wirecut machines, becoming one of the first die manufacturers in the region to blend traditional craftsmanship with computer-controlled precision.",
-    "beat4_year": "2016",
-    "beat4_heading": "Three Factories Strong",
-    "beat4_body": "Third factory opens in Chinchani. 100+ karigars now work across 3 units. Design archive crosses 2,000. Middle East orders begin. Over 10 lakh dies manufactured.",
-    "beat5_year": "2022",
-    "beat5_heading": "Die Mart is Born",
-    "beat5_body": "Hussain Nagavadria establishes Die Mart as a brand \u2014 formalising decades of craft into a company with digital vision and international ambition. European markets enter the pipeline.",
-    "beat6_year": "2026",
-    "beat6_heading": "Intelligence Meets Craft",
-    "beat6_body": "Die Mart launches its digital platform \u2014 3D catalog, AI-powered visual search, and Wirecut BCS. The world is the market.",
-    "closing_quote": "Rooted in Craft. Driven by Intelligence."
   },
   "products": {
     "label": "WHAT WE MANUFACTURE",

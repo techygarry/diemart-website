@@ -8,7 +8,6 @@ const FOOTER_LINKS = [
   { key: 'craft', page: '/services' },
   { key: 'about', page: '/about' },
   { key: 'services', page: '/services' },
-  { key: 'legacy', page: '/legacy' },
   { key: 'products', page: '/products' },
   { key: 'contact', page: '/contact' },
 ] as const;

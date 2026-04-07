@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { useRouter, usePathname } from '@/lib/i18n/navigation';
 
 const LOCALES = ['en', 'hi', 'ar'] as const;
 type Locale = (typeof LOCALES)[number];
@@ -17,7 +17,6 @@ export default function LanguageSwitcher() {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations('language');
 
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -56,14 +55,7 @@ export default function LanguageSwitcher() {
         // Storage may be unavailable
       }
 
-      // Strip current locale prefix and navigate to same page in new locale
-      const segments = pathname.split('/');
-      // If path starts with /en, /hi, /ar remove it
-      if (LOCALES.includes(segments[1] as Locale)) {
-        segments.splice(1, 1);
-      }
-      const newPath = `/${newLocale}${segments.join('/') || ''}`;
-      router.push(newPath);
+      router.replace(pathname, { locale: newLocale });
       setOpen(false);
     },
     [locale, pathname, router]

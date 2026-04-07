@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { usePathname } from 'next/navigation';
+import { usePathname } from '@/lib/i18n/navigation';
 import { useTheme } from 'next-themes';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -13,7 +13,6 @@ const NAV_SECTIONS = [
   { key: 'products', href: '#products', page: '/products' },
   { key: 'services', href: '#services', page: '/services' },
   { key: '3d_viewer', href: '#viewer', page: '/viewer' },
-  { key: 'legacy', href: '#legacy', page: '/legacy' },
 ] as const;
 
 export default function Navigation() {
@@ -28,8 +27,8 @@ export default function Navigation() {
   useEffect(() => setMounted(true), []);
   const isDark = mounted && theme === 'dark';
 
-  // Determine if we're on the homepage (pathname is just /<locale> or /<locale>/)
-  const isHomePage = pathname === `/${locale}` || pathname === `/${locale}/`;
+  // next-intl usePathname returns path without locale prefix
+  const isHomePage = pathname === '/' || pathname === '';
 
   // Track scroll for background change
   useEffect(() => {
@@ -65,12 +64,11 @@ export default function Navigation() {
   );
 
   const getNavHref = (_href: string, page: string) => {
-    return `/${locale}${page}`; // always navigate to dedicated page
+    return `/${locale}${page}`;
   };
 
   const isActive = (_href: string, page: string) => {
-    // Check if current pathname matches the page route
-    return pathname === `/${locale}${page}` || pathname === `/${locale}${page}/`;
+    return pathname === page || pathname === `${page}/`;
   };
 
   const logoHref = isHomePage ? '#' : `/${locale}`;

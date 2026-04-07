@@ -5,7 +5,6 @@ import About from '@/components/About';
 import Services from '@/components/Services';
 import DieViewer3D from '@/components/DieViewer3D';
 import GlobalReach from '@/components/GlobalReach';
-import Legacy from '@/components/Legacy';
 import Products from '@/components/Products';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -30,7 +29,6 @@ export default function HomePage() {
         <Services />
         <DieViewer3D />
         <GlobalReach />
-        <Legacy />
         <Contact />
       </main>
       <Footer />
