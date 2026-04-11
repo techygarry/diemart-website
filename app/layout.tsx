@@ -54,6 +54,24 @@ export default function RootLayout({
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function(){try{
+  if(sessionStorage.getItem('dm_preloader_seen'))return;
+  var p=location.pathname;
+  var onHome=p==='/'||/^\\/(en|hi|ar)\\/?$/.test(p);
+  if(!onHome)return;
+  var d=document.createElement('div');
+  d.id='dm-preflash';
+  d.setAttribute('aria-hidden','true');
+  d.style.cssText='position:fixed;inset:0;background:#080704;z-index:9999;';
+  (document.body||document.documentElement).appendChild(d);
+  window.__dmPreflashActive=true;
+}catch(e){}})();
+            `.trim(),
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SEO.jsonLd) }}
         />
