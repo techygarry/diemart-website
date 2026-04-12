@@ -12,7 +12,7 @@ import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 /* ─────────────────── Model Data ─────────────────── */
 
 const MODELS = [
-  { id: 'rectangle', labelKey: 'bangle_die', file: '/models/rectangle.stl' },
+  { id: 'gol', labelKey: 'gol_die', file: '/models/rectangle.stl' },
   { id: 'flower', labelKey: 'flower_die', file: '/models/flower.stl' },
   { id: 'bridge', labelKey: 'bridge_die', file: '/models/bridge.stl' },
   { id: 'kairi', labelKey: 'kairi_die', file: '/models/kairi.stl' },
