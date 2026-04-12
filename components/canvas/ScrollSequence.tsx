@@ -39,27 +39,17 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
       const canvasAspect = w / h;
       let drawW: number, drawH: number, drawX: number, drawY: number;
 
-      const mobile = w < 768;
-
-      if (mobile) {
-        // Mobile: contain — show full frame, center vertically in upper portion
+      // Cover — fill entire viewport on all screen sizes
+      if (imgAspect > canvasAspect) {
+        drawH = h;
+        drawW = h * imgAspect;
+        drawX = (w - drawW) / 2;
+        drawY = 0;
+      } else {
         drawW = w;
         drawH = w / imgAspect;
         drawX = 0;
-        drawY = h * 0.08;
-      } else {
-        // Desktop: cover — fill entire viewport
-        if (imgAspect > canvasAspect) {
-          drawH = h;
-          drawW = h * imgAspect;
-          drawX = (w - drawW) / 2;
-          drawY = 0;
-        } else {
-          drawW = w;
-          drawH = w / imgAspect;
-          drawX = 0;
-          drawY = (h - drawH) / 2;
-        }
+        drawY = (h - drawH) / 2;
       }
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
