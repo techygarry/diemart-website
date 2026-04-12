@@ -28,6 +28,7 @@ const nextConfig = {
           "img-src 'self' data: blob: https://images.unsplash.com https://raw.githack.com https://rawcdn.githack.com https://raw.githubusercontent.com",
           "connect-src 'self' https://*.supabase.co https://va.vercel-scripts.com https://raw.githack.com https://rawcdn.githack.com https://cdn.jsdelivr.net https://raw.githubusercontent.com",
           "worker-src 'self' blob:",
+          "frame-src 'self' https://www.google.com",
           "frame-ancestors 'none'",
         ].join('; '),
       },

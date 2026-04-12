@@ -523,6 +523,26 @@ export default function Contact() {
           </div>
         )}
       </div>
+
+      {/* Google Maps embed */}
+      <div className="max-w-4xl mx-auto mt-20">
+        <h3 className="font-cormorant font-semibold text-2xl md:text-3xl text-dm-gold-primary text-center mb-6">
+          {t('visit_us')}
+        </h3>
+        <div className="relative w-full aspect-[16/9] rounded-sm overflow-hidden border border-dm-black-light">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.5!2d72.6836367!3d19.8618757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be6dffb0f336e0d%3A0xfd80655a5d8c0033!2sDie%20mart!5e0!3m2!1sen!2sin!4v1"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Die Mart Location"
+            className="absolute inset-0"
+          />
+        </div>
+      </div>
     </section>
   );
 }
