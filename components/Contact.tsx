@@ -171,20 +171,20 @@ export default function Contact() {
       if (e.key === 'Enter' && !e.shiftKey && step >= 2 && step <= 4 && canAdvance()) {
         e.preventDefault();
         if (step === 3 && !isValidEmail(data.email)) {
-          setEmailError('Please enter a valid email address');
+          setEmailError(t('email_invalid'));
           return;
         }
         goTo(step + 1);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [step, data, goTo],
+    [step, data, goTo, t],
   );
 
   /* ── handle next click ── */
   const handleNext = () => {
     if (step === 3 && !isValidEmail(data.email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('email_invalid'));
       return;
     }
     setEmailError('');
@@ -223,7 +223,7 @@ export default function Contact() {
 
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(err instanceof Error ? err.message : t('error_generic'));
     } finally {
       setSubmitting(false);
     }

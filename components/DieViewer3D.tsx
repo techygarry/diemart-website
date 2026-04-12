@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useState, useRef, useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useProgress, Html } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
@@ -11,10 +12,10 @@ import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 /* ─────────────────── Model Data ─────────────────── */
 
 const MODELS = [
-  { id: 'rectangle', label: 'Bangle Die', file: '/models/rectangle.stl' },
-  { id: 'flower', label: 'Flower Die', file: '/models/flower.stl' },
-  { id: 'bridge', label: 'Bridge Die', file: '/models/bridge.stl' },
-  { id: 'kairi', label: 'Kairi Die', file: '/models/kairi.stl' },
+  { id: 'rectangle', labelKey: 'bangle_die', file: '/models/rectangle.stl' },
+  { id: 'flower', labelKey: 'flower_die', file: '/models/flower.stl' },
+  { id: 'bridge', labelKey: 'bridge_die', file: '/models/bridge.stl' },
+  { id: 'kairi', labelKey: 'kairi_die', file: '/models/kairi.stl' },
 ];
 
 /* ─────────────────── Background Preload ─────────────────── */
@@ -100,6 +101,7 @@ function STLModel({ url }: { url: string }) {
 /* ─────────────────── Main Component ─────────────────── */
 
 export default function DieViewer3D() {
+  const t = useTranslations('viewer3d');
   const [activeModel, setActiveModel] = useState(0);
 
   return (
@@ -121,13 +123,13 @@ export default function DieViewer3D() {
         {/* Header */}
         <div className="text-center mb-12">
           <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-base md:text-lg mb-5">
-            INTERACTIVE 3D
+            {t('label')}
           </p>
           <h2 className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight">
-            Inspect Every Detail
+            {t('heading')}
           </h2>
           <p className="font-cormorant text-dm-white-soft text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed">
-            Rotate, zoom, and explore our dies in full 3D. See the precision that goes into every piece.
+            {t('description')}
           </p>
         </div>
 
@@ -146,7 +148,7 @@ export default function DieViewer3D() {
                 }
               `}
             >
-              {model.label}
+              {t(model.labelKey)}
             </button>
           ))}
         </div>
@@ -162,14 +164,14 @@ export default function DieViewer3D() {
           {/* Active model label */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
             <span className="font-dm-sans text-[11px] uppercase tracking-[0.2em] text-dm-gold-primary/60 bg-dm-black-deep/80 px-4 py-1.5 rounded-sm backdrop-blur-sm">
-              {MODELS[activeModel].label}
+              {t(MODELS[activeModel].labelKey)}
             </span>
           </div>
 
           {/* Drag hint */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
             <span className="font-dm-sans text-[10px] uppercase tracking-[0.2em] text-dm-white-ghost/40">
-              Drag to rotate &middot; Scroll to zoom
+              {t('drag_hint')}
             </span>
           </div>
 
@@ -216,7 +218,7 @@ export default function DieViewer3D() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              Real Die Geometry
+              {t('real_geometry')}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -225,7 +227,7 @@ export default function DieViewer3D() {
               <circle cx="12" cy="12" r="3" />
             </svg>
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              Micron-Level Detail
+              {t('micron_detail')}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -233,7 +235,7 @@ export default function DieViewer3D() {
               <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
             </svg>
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              From Our CNC Machines
+              {t('cnc_machines')}
             </span>
           </div>
         </div>

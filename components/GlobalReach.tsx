@@ -4,6 +4,7 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Html } from '@react-three/drei';
 import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 import * as THREE from 'three';
 import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 
@@ -278,14 +279,15 @@ function Globe({ isDark }: { isDark: boolean }) {
 /* ─────────────────── Stats Sidebar ─────────────────── */
 
 const COUNTRY_STATS = [
-  { country: 'India', cities: '16+ Cities', flag: '🇮🇳' },
-  { country: 'UAE', cities: 'Dubai · Sharjah · Abu Dhabi', flag: '🇦🇪' },
-  { country: 'Italy', cities: 'Milan · Arezzo · Vicenza', flag: '🇮🇹' },
+  { countryKey: 'india', citiesKey: 'india_cities', flag: '🇮🇳' },
+  { countryKey: 'uae', citiesKey: 'uae_cities', flag: '🇦🇪' },
+  { countryKey: 'italy', citiesKey: 'italy_cities', flag: '🇮🇹' },
 ];
 
 /* ─────────────────── Main Component ─────────────────── */
 
 export default function GlobalReach() {
+  const t = useTranslations('global');
   const { theme } = useTheme();
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -311,13 +313,13 @@ export default function GlobalReach() {
         {/* Header */}
         <div className="text-center mb-16">
           <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-base md:text-lg mb-5">
-            GLOBAL PRESENCE
+            {t('label')}
           </p>
           <h2 className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight">
-            From Chinchani to the World
+            {t('heading')}
           </h2>
           <p className="font-cormorant text-dm-white-soft text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed">
-            Our dies reach jewellers across 3 countries and 20+ cities. Every pin on this globe is a customer who trusts our craft.
+            {t('description')}
           </p>
         </div>
 
@@ -364,25 +366,25 @@ export default function GlobalReach() {
           <div className="flex flex-col gap-4">
             {COUNTRY_STATS.map((stat) => (
               <div
-                key={stat.country}
+                key={stat.countryKey}
                 className={`
                   group p-6 border rounded-sm transition-all duration-300 cursor-default
-                  ${hoveredCountry === stat.country
+                  ${hoveredCountry === stat.countryKey
                     ? 'border-dm-gold-primary/50 bg-dm-gold-primary/5'
                     : 'border-dm-black-light bg-dm-black-mid/40 hover:border-dm-gold-primary/30'
                   }
                 `}
-                onMouseEnter={() => setHoveredCountry(stat.country)}
+                onMouseEnter={() => setHoveredCountry(stat.countryKey)}
                 onMouseLeave={() => setHoveredCountry(null)}
               >
                 <div className="flex items-center gap-4 mb-3">
                   <span className="text-3xl">{stat.flag}</span>
                   <h3 className="font-cormorant font-semibold text-2xl text-dm-gold-primary">
-                    {stat.country}
+                    {t(stat.countryKey)}
                   </h3>
                 </div>
                 <p className="font-dm-sans text-sm text-dm-white-ghost tracking-wider">
-                  {stat.cities}
+                  {t(stat.citiesKey)}
                 </p>
               </div>
             ))}
@@ -393,14 +395,14 @@ export default function GlobalReach() {
                 3
               </span>
               <span className="font-dm-sans text-xs uppercase tracking-[0.2em] text-dm-white-ghost">
-                Countries Served
+                {t('countries_served')}
               </span>
               <div className="w-8 h-px bg-dm-gold-primary/30 mx-auto my-3" aria-hidden="true" />
               <span className="font-cormorant font-bold text-4xl text-dm-gold-primary block mb-1">
                 20+
               </span>
               <span className="font-dm-sans text-xs uppercase tracking-[0.2em] text-dm-white-ghost">
-                Cities Reached
+                {t('cities_reached')}
               </span>
             </div>
           </div>
