@@ -17,6 +17,21 @@ const MODELS = [
   { id: 'kairi', label: 'Kairi Die', file: '/models/kairi.stl' },
 ];
 
+/* ─────────────────── Background Preload ─────────────────── */
+// Start fetching STL files + HDR environment map as soon as this module loads.
+// Files land in the browser HTTP cache so they're instant when the viewer mounts.
+if (typeof window !== 'undefined') {
+  const HDR_URL =
+    'https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr';
+  [HDR_URL, ...MODELS.map((m) => m.file)].forEach((url) => {
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = url;
+    link.as = url.endsWith('.hdr') ? 'fetch' : 'fetch';
+    document.head.appendChild(link);
+  });
+}
+
 /* ─────────────────── Loader Indicator ─────────────────── */
 
 function Loader() {
