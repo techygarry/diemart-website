@@ -72,6 +72,21 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
     return unsubscribe;
   }, [framesReady, smoothProgress, drawFrame]);
 
+  // Redraw current frame on window resize
+  useEffect(() => {
+    if (!framesReady) return;
+    const handleResize = () => {
+      const v = smoothProgress.get();
+      const frameIndex = Math.min(
+        Math.floor(v * (TOTAL_FRAMES - 1)),
+        TOTAL_FRAMES - 1
+      );
+      drawFrame(Math.max(0, frameIndex));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [framesReady, smoothProgress, drawFrame]);
+
   return (
     <div className="absolute inset-0 z-10" aria-hidden="true" style={{ background: '#080704' }}>
       <canvas

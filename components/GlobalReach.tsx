@@ -79,15 +79,21 @@ function Globe({ isDark }: { isDark: boolean }) {
   // Load GeoJSON country boundaries
   useEffect(() => {
     fetch('/models/world.geojson')
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`GeoJSON fetch failed: ${r.status}`);
+        return r.json();
+      })
       .then((geojson) => {
         const lines: { points: THREE.Vector3[]; highlight: boolean }[] = [];
         const radius = 2.005;
+
+        if (!geojson?.features) return;
 
         for (const feature of geojson.features) {
           const name = feature.properties?.name || '';
           const isHighlight = HIGHLIGHT_COUNTRIES.has(name);
           const geom = feature.geometry;
+          if (!geom) continue;
 
           const processRing = (ring: number[][]) => {
             const pts: THREE.Vector3[] = [];
@@ -115,7 +121,9 @@ function Globe({ isDark }: { isDark: boolean }) {
 
         setCountryLines(lines);
       })
-      .catch(() => {});
+      .catch(() => {
+        // GeoJSON unavailable or malformed — globe renders without country borders
+      });
   }, []);
 
   // Subtle grid lines (fewer, just for orientation)

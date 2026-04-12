@@ -85,15 +85,20 @@ export default function CustomCursor() {
     const interactives = addInteractiveListeners();
 
     // Observe DOM changes to re-attach listeners for dynamically added elements
+    // Debounced to avoid performance issues with GSAP/framer-motion/Three.js DOM churn
+    let debounceTimer: ReturnType<typeof setTimeout>;
     const observer = new MutationObserver(() => {
-      // Re-add listeners for any new interactive elements
-      const newInteractives = document.querySelectorAll('a, button, [role="button"], input, textarea, select, [tabindex]');
-      newInteractives.forEach((el) => {
-        el.removeEventListener('mouseenter', handleMouseEnterInteractive);
-        el.removeEventListener('mouseleave', handleMouseLeaveInteractive);
-        el.addEventListener('mouseenter', handleMouseEnterInteractive);
-        el.addEventListener('mouseleave', handleMouseLeaveInteractive);
-      });
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        // Re-add listeners for any new interactive elements
+        const newInteractives = document.querySelectorAll('a, button, [role="button"], input, textarea, select, [tabindex]');
+        newInteractives.forEach((el) => {
+          el.removeEventListener('mouseenter', handleMouseEnterInteractive);
+          el.removeEventListener('mouseleave', handleMouseLeaveInteractive);
+          el.addEventListener('mouseenter', handleMouseEnterInteractive);
+          el.addEventListener('mouseleave', handleMouseLeaveInteractive);
+        });
+      }, 300);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
@@ -107,6 +112,7 @@ export default function CustomCursor() {
         el.removeEventListener('mouseenter', handleMouseEnterInteractive);
         el.removeEventListener('mouseleave', handleMouseLeaveInteractive);
       });
+      clearTimeout(debounceTimer);
       observer.disconnect();
       cancelAnimationFrame(rafRef.current);
     };

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname } from '@/lib/i18n/navigation';
-import { useTheme } from 'next-themes';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
 import { BRAND } from '@/lib/brand';
@@ -19,13 +18,8 @@ export default function Navigation() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
-  const { theme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-  const isDark = mounted && theme === 'dark';
 
   // next-intl usePathname returns path without locale prefix
   const isHomePage = pathname === '/' || pathname === '';

@@ -86,7 +86,11 @@ export function HeroPreloadProvider({ children }: { children: ReactNode }) {
     const el = document.getElementById('dm-preflash');
     if (el) {
       el.remove();
-      sessionStorage.setItem('dm_preloader_seen', '1');
+      try {
+        sessionStorage.setItem('dm_preloader_seen', '1');
+      } catch {
+        // sessionStorage may throw in private browsing mode — safe to ignore.
+      }
     }
   }, [framesReady]);
 

@@ -14,6 +14,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 1,
   }));
 
+  // Sub-pages for each locale
+  const SUB_PAGES = ['about', 'products', 'services', 'contact'];
+  const subPages = LOCALES.flatMap((locale) =>
+    SUB_PAGES.map((page) => ({
+      url: `${BASE_URL}/${locale}/${page}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    }))
+  );
+
   // Root URL
   const root = {
     url: BASE_URL,
@@ -22,5 +33,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 1,
   };
 
-  return [root, ...homePages];
+  return [root, ...homePages, ...subPages];
 }

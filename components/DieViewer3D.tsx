@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useRef, useCallback } from 'react';
+import { Suspense, useState, useRef, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useProgress, Html } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
@@ -45,7 +45,7 @@ function STLModel({ url }: { url: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   // Center and normalize the geometry
-  const processedGeometry = useCallback(() => {
+  const processedGeometry = useMemo(() => {
     const geo = geometry.clone();
     geo.computeBoundingBox();
     geo.computeVertexNormals();
@@ -69,7 +69,7 @@ function STLModel({ url }: { url: string }) {
   }, [geometry]);
 
   return (
-    <mesh ref={meshRef} geometry={processedGeometry()} castShadow receiveShadow>
+    <mesh ref={meshRef} geometry={processedGeometry} castShadow receiveShadow>
       <meshPhysicalMaterial
         color="#D4AF37"
         metalness={0.85}
