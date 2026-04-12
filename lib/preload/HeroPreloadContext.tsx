@@ -80,17 +80,30 @@ export function HeroPreloadProvider({ children }: { children: ReactNode }) {
     };
   }, [isMobile]);
 
+  // Update the preflash progress bar as frames load.
+  const pctLoaded = Math.round((loadedCount / TOTAL_FRAMES) * 100);
+  useEffect(() => {
+    const bar = document.getElementById('dm-preflash-bar');
+    const pct = document.getElementById('dm-preflash-pct');
+    if (bar) bar.style.width = `${pctLoaded}%`;
+    if (pct) pct.textContent = `${pctLoaded}%`;
+  }, [pctLoaded]);
+
   // Remove the preflash overlay once frames are ready to display.
   useEffect(() => {
     if (!framesReady) return;
     const el = document.getElementById('dm-preflash');
     if (el) {
-      el.remove();
-      try {
-        sessionStorage.setItem('dm_preloader_seen', '1');
-      } catch {
-        // sessionStorage may throw in private browsing mode — safe to ignore.
-      }
+      el.style.transition = 'opacity 0.5s ease';
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.remove();
+        try {
+          sessionStorage.setItem('dm_preloader_seen', '1');
+        } catch {
+          // sessionStorage may throw in private browsing mode — safe to ignore.
+        }
+      }, 500);
     }
   }, [framesReady]);
 

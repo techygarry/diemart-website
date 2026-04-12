@@ -72,7 +72,8 @@ export default function RootLayout({
   var d=document.createElement('div');
   d.id='dm-preflash';
   d.setAttribute('aria-hidden','true');
-  d.style.cssText='position:fixed;inset:0;background:#080704;z-index:9999;';
+  d.style.cssText='position:fixed;inset:0;background:#080704;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+  d.innerHTML='<div style="text-align:center"><p style="font-family:Cormorant Garamond,Cormorant,serif;font-size:28px;color:#D4AF37;letter-spacing:0.15em;margin:0 0 24px">DIE MART</p><div style="width:120px;height:1px;background:rgba(212,175,55,0.2);margin:0 auto;overflow:hidden;border-radius:1px"><div id="dm-preflash-bar" style="width:0%;height:100%;background:#D4AF37;transition:width 0.3s ease"></div></div><p id="dm-preflash-pct" style="font-family:sans-serif;font-size:11px;color:rgba(212,175,55,0.5);margin-top:12px;letter-spacing:0.2em">0%</p></div>';
   (document.body||document.documentElement).appendChild(d);
   window.__dmPreflashActive=true;
 }catch(e){}})();

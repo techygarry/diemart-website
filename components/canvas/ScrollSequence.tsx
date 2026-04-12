@@ -12,7 +12,7 @@ interface ScrollSequenceProps {
 
 export default function ScrollSequence({ progress: smoothProgress }: ScrollSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { images, framesReady } = useHeroPreload();
+  const { images, framesReady, progress } = useHeroPreload();
 
   // Draw frame to canvas based on scroll
   const drawFrame = useCallback(
@@ -89,6 +89,26 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
 
   return (
     <div className="absolute inset-0 z-10" aria-hidden="true" style={{ background: '#080704' }}>
+      {/* Loading indicator while frames download */}
+      {!framesReady && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+          <p
+            className="font-cormorant-sc text-[28px] md:text-[36px] text-[#D4AF37] tracking-[0.15em] mb-6"
+            style={{ textShadow: '0 2px 20px rgba(212,175,55,0.3)' }}
+          >
+            DIE MART
+          </p>
+          <div className="w-[120px] h-[1px] bg-[#D4AF37]/20 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#D4AF37] transition-[width] duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="font-dm-sans text-[11px] text-[#D4AF37]/50 mt-3 tracking-[0.2em]">
+            {progress}%
+          </p>
+        </div>
+      )}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
