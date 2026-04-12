@@ -1,0 +1,22 @@
+{
+  "name": "Die Mart — Jewellery Die Manufacturers",
+  "short_name": "Die Mart",
+  "description": "Jewellery die manufacturers in Chinchani, Tarapur, Maharashtra. 3,600+ designs, 3 factories, 100+ karigars.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080704",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "665x375",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

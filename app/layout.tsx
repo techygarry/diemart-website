@@ -3,6 +3,7 @@ import { Cormorant_SC, Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { SEO } from '@/lib/brand';
 import ThemeProvider from '@/components/ThemeProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 const cormorantSC = Cormorant_SC({
   subsets: ['latin'],
@@ -38,6 +39,11 @@ export const metadata: Metadata = {
     siteName: 'Die Mart',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: SEO.title,
+    description: SEO.description,
+  },
 };
 
 export default function RootLayout({
@@ -53,6 +59,8 @@ export default function RootLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#D4AF37" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -80,6 +88,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
