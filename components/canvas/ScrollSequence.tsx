@@ -37,10 +37,18 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
       ctx.clearRect(0, 0, w, h);
       const imgAspect = img.naturalWidth / img.naturalHeight;
       const canvasAspect = w / h;
+      const isMobileViewport = w < 768;
       let drawW: number, drawH: number, drawX: number, drawY: number;
 
-      // Cover — fill entire viewport on all screen sizes
-      if (imgAspect > canvasAspect) {
+      if (isMobileViewport) {
+        // Mobile: contain — show the full die, centered vertically.
+        // Dark background blends seamlessly above and below.
+        drawW = w;
+        drawH = w / imgAspect;
+        drawX = 0;
+        drawY = (h - drawH) / 2;
+      } else if (imgAspect > canvasAspect) {
+        // Desktop: cover — fill entire viewport
         drawH = h;
         drawW = h * imgAspect;
         drawX = (w - drawW) / 2;
