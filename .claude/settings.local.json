@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"^-.*\\\\.tsx$\")",
+      "Bash(git fetch:*)",
+      "Bash(git log:*)",
+      "Bash(git pull:*)",
+      "Bash(npm run:*)",
+      "Bash(xargs grep:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/en)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/hi)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/ar)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/en/about)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/hi/about)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/ar/about)",
+      "Bash(node:*)",
+      "Bash(curl -s http://localhost:3000/en)",
+      "Bash(curl -s http://localhost:3000/hi)",
+      "Bash(curl -s http://localhost:3000/ar)",
+      "Bash(du -sh F:/DieMart/diemart-website/public/sequence/*)",
+      "mcp__plugin_claude-mem_mcp-search__get_observations",
+      "Bash(netstat -ano)",
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(grep -r \"TODO\\\\|FIXME\\\\|XXX\\\\|HACK\\\\|placeholder\\\\|dummy\\\\|test\" \"F:\\\\DieMart\\\\diemart-website\" --include=\"*.tsx\" --include=\"*.ts\" ! -path \"*/node_modules/*\" ! -path \"*/.next/*\")",
+      "Bash(gh pr:*)",
+      "Bash(pip3 list:*)",
+      "Bash(pip install:*)",
+      "Bash(python -c ':*)"
+    ]
+  }
+}
