@@ -357,42 +357,13 @@ function ProductCard({
       </span>
 
       {/* Description */}
-      <p className="font-cormorant text-dm-white-soft/80 leading-relaxed text-[1.05rem] mb-6">
+      <p className="font-cormorant text-dm-white-soft/80 leading-relaxed text-[1.05rem]">
         {t(product.descKey)}
       </p>
 
-      {/* Learn More indicator — appears on hover */}
-      <div
-        className="
-          flex items-center gap-2
-          opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0
-          transition-all duration-500 ease-luxury
-        "
-      >
-        <span className="font-dm-sans text-xs uppercase tracking-[0.15em] text-dm-gold-primary">
-          Learn More
-        </span>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          className="text-dm-gold-primary transition-transform duration-300 group-hover:translate-x-1"
-          aria-hidden="true"
-        >
-          <path
-            d="M3 8H13M13 8L9 4M13 8L9 12"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-
       {/* Subtle corner accents */}
-      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-tr-lg" aria-hidden="true" />
-      <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-bl-lg" aria-hidden="true" />
+      <div className="absolute top-3 end-3 w-4 h-4 border-t border-e border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-se-lg" aria-hidden="true" />
+      <div className="absolute bottom-3 start-3 w-4 h-4 border-b border-s border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-es-lg" aria-hidden="true" />
     </div>
   );
 }

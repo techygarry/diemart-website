@@ -1,8 +1,17 @@
+import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { routing } from '@/lib/i18n/routing';
+import { pageMetadata } from '@/lib/seo';
 
-const locales = ['en', 'hi', 'ar'];
+export function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Metadata {
+  return pageMetadata(locale, 'home');
+}
 
 export default async function LocaleLayout({
   children,
@@ -11,16 +20,13 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  if (!locales.includes(locale)) notFound();
+  if (!routing.locales.includes(locale as any)) notFound();
 
   const messages = await getMessages();
-  const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
-    <div dir={dir} lang={locale}>
-      <NextIntlClientProvider messages={messages}>
-        {children}
-      </NextIntlClientProvider>
-    </div>
+    <NextIntlClientProvider messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }

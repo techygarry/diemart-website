@@ -281,7 +281,7 @@ function PackageIcon({ className }: { className?: string }) {
 
 function WhatWeManufactureSection() {
   return (
-    <section className="relative py-24 bg-dm-black-warm overflow-hidden">
+    <section className="relative py-[120px] bg-dm-black-warm overflow-hidden">
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -378,7 +378,7 @@ const SPECS = [
 
 function SpecificationsSection() {
   return (
-    <section className="relative py-24 bg-dm-black-deep overflow-hidden">
+    <section className="relative py-[120px] bg-dm-black-deep overflow-hidden">
       {/* Background accent */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -441,8 +441,8 @@ function SpecificationsSection() {
                 </div>
 
                 {/* Corner accents */}
-                <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-tr-lg" aria-hidden="true" />
-                <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-bl-lg" aria-hidden="true" />
+                <div className="absolute top-3 end-3 w-4 h-4 border-t border-e border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-se-lg" aria-hidden="true" />
+                <div className="absolute bottom-3 start-3 w-4 h-4 border-b border-s border-dm-gold-primary/0 group-hover:border-dm-gold-primary/20 transition-all duration-700 rounded-es-lg" aria-hidden="true" />
               </div>
             );
           })}
@@ -479,7 +479,7 @@ const STEPS = [
 
 function HowToOrderSection() {
   return (
-    <section className="relative py-24 bg-dm-black-warm overflow-hidden">
+    <section className="relative py-[120px] bg-dm-black-warm overflow-hidden">
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"

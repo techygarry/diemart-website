@@ -4,7 +4,6 @@
     "about": "About",
     "services": "Services",
     "3d_viewer": "3D Viewer",
-    "legacy": "Legacy",
     "products": "Products",
     "contact": "Contact"
   },
@@ -27,7 +26,11 @@
     "beat_revolution": "In 2022, Hussain Nagavadria established Die Mart as a brand. AI-powered catalogs. Digital tracking. The only manufacturer in the world building this future.",
     "beat_world_title": "THE WORLD",
     "beat_world": "Die reassembled. Perfect. Ready. From Chinchani to the world \u2014 India, Middle East, Europe. Your next die starts here.",
-    "beat_world_cta": "Start Your Order on WhatsApp"
+    "beat_world_cta": "Start Your Order on WhatsApp",
+    "beat_the_die": "THE DIE",
+    "beat_your_die": "YOUR DIE",
+    "beat_of": "of 02",
+    "beat_die_stat": "3,600+ Designs"
   },
   "trust": {
     "designs": "3,600+ Designs",
@@ -79,28 +82,6 @@
     "step5_desc": "Machines execute. Components machined in sequence. Die goes to embossing \u2014 hand, engraving, or laser.",
     "step6_title": "TESTED & DISPATCHED",
     "step6_desc": "Three-point quality test. Pass: dispatched with WhatsApp confirmation. Fail: repaired and re-tested. It leaves only when it is right."
-  },
-  "legacy": {
-    "heading": "Rooted in Craft",
-    "beat1_year": "1980",
-    "beat1_heading": "A Craft Begins",
-    "beat1_body": "Elyas Nagavadria begins his journey in the jewellery die craft. Starting from Kurla, Mumbai, he learns the trade through hands-on work \u2014 carrying parcels between Kurla and Chinchani, watching karigars work their machines.",
-    "beat2_year": "1995",
-    "beat2_heading": "Growing With Gold",
-    "beat2_body": "Years of discipline and craft mastery pay off. Elyas expands operations in Chinchani. Karigar count grows steadily. Flower dies and emboss dies join the catalog alongside bangle dies.",
-    "beat3_year": "2008",
-    "beat3_heading": "The CNC Revolution",
-    "beat3_body": "Elyas invests in CNC wirecut machines, becoming one of the first die manufacturers in the region to blend traditional craftsmanship with computer-controlled precision.",
-    "beat4_year": "2016",
-    "beat4_heading": "Three Factories Strong",
-    "beat4_body": "Third factory opens in Chinchani. 100+ karigars now work across 3 units. Design archive crosses 2,000. Middle East orders begin. Over 10 lakh dies manufactured.",
-    "beat5_year": "2022",
-    "beat5_heading": "Die Mart is Born",
-    "beat5_body": "Hussain Nagavadria establishes Die Mart as a brand \u2014 formalising decades of craft into a company with digital vision and international ambition. European markets enter the pipeline.",
-    "beat6_year": "2026",
-    "beat6_heading": "Intelligence Meets Craft",
-    "beat6_body": "Die Mart launches its digital platform \u2014 3D catalog, AI-powered visual search, and Wirecut BCS. The world is the market.",
-    "closing_quote": "Rooted in Craft. Driven by Intelligence."
   },
   "products": {
     "label": "WHAT WE MANUFACTURE",
@@ -167,7 +148,10 @@
     "submit": "Send Inquiry",
     "thank_you_title": "Thank You",
     "thank_you_message": "We\u2019ve received your inquiry. Our team will get back to you within 4 hours.",
-    "whatsapp_cta": "Continue on WhatsApp"
+    "whatsapp_cta": "Continue on WhatsApp",
+    "visit_us": "Visit Our Factory",
+    "email_invalid": "Please enter a valid email address",
+    "error_generic": "Something went wrong. Please try again."
   },
   "footer": {
     "tagline": "The Die Behind Every Jewellery",
@@ -190,5 +174,31 @@
     "en": "EN",
     "hi": "\u0939\u093f",
     "ar": "AR"
+  },
+  "viewer3d": {
+    "label": "INTERACTIVE 3D",
+    "heading": "Inspect Every Detail",
+    "description": "Rotate, zoom, and explore our dies in full 3D. See the precision that goes into every piece.",
+    "gol_die": "Gol Die",
+    "flower_die": "Flower Die",
+    "bridge_die": "Bridge Die",
+    "kairi_die": "Kairi Die",
+    "drag_hint": "Drag to rotate \u00b7 Scroll to zoom",
+    "real_geometry": "Real Die Geometry",
+    "micron_detail": "Micron-Level Detail",
+    "cnc_machines": "From Our CNC Machines"
+  },
+  "global": {
+    "label": "GLOBAL PRESENCE",
+    "heading": "From Chinchani to the World",
+    "description": "Our dies reach jewellers across 3 countries and 20+ cities. Every pin on this globe is a customer who trusts our craft.",
+    "india": "India",
+    "uae": "UAE",
+    "italy": "Italy",
+    "india_cities": "16+ Cities",
+    "uae_cities": "Dubai \u00b7 Sharjah \u00b7 Abu Dhabi",
+    "italy_cities": "Milan \u00b7 Arezzo \u00b7 Vicenza",
+    "countries_served": "Countries Served",
+    "cities_reached": "Cities Reached"
   }
 }

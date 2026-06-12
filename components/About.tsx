@@ -89,6 +89,7 @@ function FounderImage() {
             alt="Artisan craftsman at work — Die Mart workshop"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
+            loading="lazy"
             className={`object-cover transition-opacity duration-700 ease-luxury ${
               loaded ? 'opacity-100' : 'opacity-0'
             }`}

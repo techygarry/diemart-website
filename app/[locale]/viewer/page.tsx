@@ -1,7 +1,14 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Navigation from '@/components/Navigation';
-import DieViewer3D from '@/components/DieViewer3D';
+
+const DieViewer3D = dynamic(() => import('@/components/DieViewer3D'), {
+  ssr: false,
+  loading: () => (
+    <section className="relative py-[100px] bg-dm-black-deep min-h-[60vh]" aria-hidden="true" />
+  ),
+});
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import CustomCursor from '@/components/CustomCursor';

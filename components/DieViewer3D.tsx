@@ -1,6 +1,7 @@
 'use client';
 
-import { Suspense, useState, useRef, useCallback } from 'react';
+import { Suspense, useState, useRef, useMemo, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useProgress, Html } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
@@ -11,11 +12,24 @@ import WebGLErrorBoundary from '@/components/WebGLErrorBoundary';
 /* ─────────────────── Model Data ─────────────────── */
 
 const MODELS = [
-  { id: 'rectangle', label: 'Bangle Die', file: '/models/rectangle.stl' },
-  { id: 'flower', label: 'Flower Die', file: '/models/flower.stl' },
-  { id: 'bridge', label: 'Bridge Die', file: '/models/bridge.stl' },
-  { id: 'kairi', label: 'Kairi Die', file: '/models/kairi.stl' },
+  { id: 'gol', labelKey: 'gol_die', file: '/models/rectangle.stl' },
+  { id: 'flower', labelKey: 'flower_die', file: '/models/flower.stl' },
+  { id: 'bridge', labelKey: 'bridge_die', file: '/models/bridge.stl' },
+  { id: 'kairi', labelKey: 'kairi_die', file: '/models/kairi.stl' },
 ];
+
+// Self-hosted so the CSP doesn't need third-party CDN domains.
+const HDR_FILE = '/hdri/potsdamer_platz_1k.hdr';
+
+/* ─────────────────── Deferred Preload ─────────────────── */
+// Warm the HTTP cache for the active model + HDR, but only once the section is
+// near the viewport. The models total ~26 MB — fetching them at module load
+// competed with the hero frame sequence and made first paint dramatically slower.
+function prefetchViewerAssets() {
+  [HDR_FILE, ...MODELS.map((m) => m.file)].forEach((url) => {
+    fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
+  });
+}
 
 /* ─────────────────── Loader Indicator ─────────────────── */
 
@@ -45,7 +59,7 @@ function STLModel({ url }: { url: string }) {
   const meshRef = useRef<THREE.Mesh>(null);
 
   // Center and normalize the geometry
-  const processedGeometry = useCallback(() => {
+  const processedGeometry = useMemo(() => {
     const geo = geometry.clone();
     geo.computeBoundingBox();
     geo.computeVertexNormals();
@@ -69,7 +83,7 @@ function STLModel({ url }: { url: string }) {
   }, [geometry]);
 
   return (
-    <mesh ref={meshRef} geometry={processedGeometry()} castShadow receiveShadow>
+    <mesh ref={meshRef} geometry={processedGeometry} castShadow receiveShadow>
       <meshPhysicalMaterial
         color="#D4AF37"
         metalness={0.85}
@@ -85,10 +99,38 @@ function STLModel({ url }: { url: string }) {
 /* ─────────────────── Main Component ─────────────────── */
 
 export default function DieViewer3D() {
+  const t = useTranslations('viewer3d');
   const [activeModel, setActiveModel] = useState(0);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Mount the WebGL canvas (and start asset downloads) only when the section
+  // is within ~800px of the viewport, so the landing page stays light.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      prefetchViewerAssets();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          prefetchViewerAssets();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="viewer"
       className="relative py-[100px] bg-dm-black-deep overflow-hidden"
     >
@@ -106,13 +148,13 @@ export default function DieViewer3D() {
         {/* Header */}
         <div className="text-center mb-12">
           <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-base md:text-lg mb-5">
-            INTERACTIVE 3D
+            {t('label')}
           </p>
           <h2 className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight">
-            Inspect Every Detail
+            {t('heading')}
           </h2>
           <p className="font-cormorant text-dm-white-soft text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed">
-            Rotate, zoom, and explore our dies in full 3D. See the precision that goes into every piece.
+            {t('description')}
           </p>
         </div>
 
@@ -131,7 +173,7 @@ export default function DieViewer3D() {
                 }
               `}
             >
-              {model.label}
+              {t(model.labelKey)}
             </button>
           ))}
         </div>
@@ -147,53 +189,61 @@ export default function DieViewer3D() {
           {/* Active model label */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
             <span className="font-dm-sans text-[11px] uppercase tracking-[0.2em] text-dm-gold-primary/60 bg-dm-black-deep/80 px-4 py-1.5 rounded-sm backdrop-blur-sm">
-              {MODELS[activeModel].label}
+              {t(MODELS[activeModel].labelKey)}
             </span>
           </div>
 
           {/* Drag hint */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
             <span className="font-dm-sans text-[10px] uppercase tracking-[0.2em] text-dm-white-ghost/40">
-              Drag to rotate &middot; Scroll to zoom
+              {t('drag_hint')}
             </span>
           </div>
 
-          <WebGLErrorBoundary>
-            <Canvas
-              shadows
-              dpr={[1, 2]}
-              camera={{ position: [0, 2, 6], fov: 40 }}
-              gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
-            >
-              <color attach="background" args={['#0a0908']} />
-              <fog attach="fog" args={['#0a0908', 8, 20]} />
+          {inView ? (
+            <WebGLErrorBoundary>
+              <Canvas
+                shadows
+                dpr={[1, 2]}
+                camera={{ position: [0, 2, 6], fov: 40 }}
+                gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
+              >
+                <color attach="background" args={['#0a0908']} />
+                <fog attach="fog" args={['#0a0908', 8, 20]} />
 
-              <Suspense fallback={<Loader />}>
-                <Stage
-                  intensity={0.6}
-                  environment="city"
-                  shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
-                  adjustCamera={false}
-                >
-                  <STLModel
-                    key={MODELS[activeModel].file}
-                    url={MODELS[activeModel].file}
-                  />
-                </Stage>
-              </Suspense>
+                <Suspense fallback={<Loader />}>
+                  <Stage
+                    intensity={0.6}
+                    environment={{ files: HDR_FILE }}
+                    shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
+                    adjustCamera={false}
+                  >
+                    <STLModel
+                      key={MODELS[activeModel].file}
+                      url={MODELS[activeModel].file}
+                    />
+                  </Stage>
+                </Suspense>
 
-              <OrbitControls
-                enablePan={false}
-                enableZoom={true}
-                minDistance={3}
-                maxDistance={12}
-                autoRotate
-                autoRotateSpeed={1.5}
-                maxPolarAngle={Math.PI / 1.8}
-                minPolarAngle={Math.PI / 6}
-              />
-            </Canvas>
-          </WebGLErrorBoundary>
+                <OrbitControls
+                  enablePan={false}
+                  enableZoom={true}
+                  minDistance={3}
+                  maxDistance={12}
+                  autoRotate
+                  autoRotateSpeed={1.5}
+                  maxPolarAngle={Math.PI / 1.8}
+                  minPolarAngle={Math.PI / 6}
+                />
+              </Canvas>
+            </WebGLErrorBoundary>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+              <div className="w-32 h-[2px] bg-[#1a1a1a] rounded-full overflow-hidden">
+                <div className="h-full w-1/4 bg-[#D4AF37]/40 animate-pulse" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom info bar */}
@@ -201,7 +251,7 @@ export default function DieViewer3D() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              Real Die Geometry
+              {t('real_geometry')}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -210,7 +260,7 @@ export default function DieViewer3D() {
               <circle cx="12" cy="12" r="3" />
             </svg>
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              Micron-Level Detail
+              {t('micron_detail')}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -218,7 +268,7 @@ export default function DieViewer3D() {
               <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
             </svg>
             <span className="font-dm-sans text-xs uppercase tracking-wider text-dm-white-ghost">
-              From Our CNC Machines
+              {t('cnc_machines')}
             </span>
           </div>
         </div>

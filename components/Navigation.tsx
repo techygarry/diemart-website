@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
+import { usePathname } from '@/lib/i18n/navigation';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/ThemeToggle';
 import { BRAND } from '@/lib/brand';
@@ -13,23 +12,17 @@ const NAV_SECTIONS = [
   { key: 'products', href: '#products', page: '/products' },
   { key: 'services', href: '#services', page: '/services' },
   { key: '3d_viewer', href: '#viewer', page: '/viewer' },
-  { key: 'legacy', href: '#legacy', page: '/legacy' },
 ] as const;
 
 export default function Navigation() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const pathname = usePathname();
-  const { theme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
-  const isDark = mounted && theme === 'dark';
-
-  // Determine if we're on the homepage (pathname is just /<locale> or /<locale>/)
-  const isHomePage = pathname === `/${locale}` || pathname === `/${locale}/`;
+  // next-intl usePathname returns path without locale prefix
+  const isHomePage = pathname === '/' || pathname === '';
 
   // Track scroll for background change
   useEffect(() => {
@@ -65,12 +58,11 @@ export default function Navigation() {
   );
 
   const getNavHref = (_href: string, page: string) => {
-    return `/${locale}${page}`; // always navigate to dedicated page
+    return `/${locale}${page}`;
   };
 
   const isActive = (_href: string, page: string) => {
-    // Check if current pathname matches the page route
-    return pathname === `/${locale}${page}` || pathname === `/${locale}${page}/`;
+    return pathname === page || pathname === `${page}/`;
   };
 
   const logoHref = isHomePage ? '#' : `/${locale}`;
@@ -92,8 +84,8 @@ export default function Navigation() {
                     transition-all duration-500 ease-luxury
                     ${
                       scrolled
-                        ? 'bg-black/85 backdrop-blur-md shadow-[0_1px_0_rgba(212,175,55,0.08)]'
-                        : 'bg-black/30 backdrop-blur-sm'
+                        ? 'bg-dm-black-deep/85 backdrop-blur-md shadow-[0_1px_0_rgba(212,175,55,0.08)]'
+                        : 'bg-dm-black-deep/30 backdrop-blur-sm'
                     }`}
         style={{ height: 'var(--nav-height)' }}
       >
@@ -106,7 +98,7 @@ export default function Navigation() {
             aria-label="Die Mart - Back to top"
           >
             <span className="inline-flex items-center justify-center bg-black rounded-lg px-2 py-1">
-              <img src="/logo.png" alt="Die Mart" className="h-8 md:h-10 w-auto" />
+              <img src="/logo.png" alt="Die Mart" width={665} height={375} className="h-8 md:h-10 w-auto" />
             </span>
           </a>
 
@@ -121,16 +113,16 @@ export default function Navigation() {
                              transition-colors duration-[var(--duration-hover)]
                              ${
                                isActive(href, page)
-                                 ? 'text-[#D4AF37]'
-                                 : 'text-white/75 hover:text-[#D4AF37]'
+                                 ? 'text-dm-gold-primary'
+                                 : 'text-dm-white-soft hover:text-dm-gold-primary'
                              }`}
                 >
                   {t(key)}
                   {/* Active underline */}
                   <span
-                    className={`absolute -bottom-1 inset-inline-start-0 h-px bg-dm-gold-primary
+                    className={`absolute -bottom-1 start-0 h-px bg-dm-gold-primary
                                transition-all duration-300 ease-luxury
-                               ${isActive(href, page) ? 'inset-inline-end-0' : 'inset-inline-end-full'}`}
+                               ${isActive(href, page) ? 'end-0' : 'end-full'}`}
                   />
                 </a>
               </li>
@@ -144,10 +136,10 @@ export default function Navigation() {
             <a
               href={`/${locale}/contact`}
               className="font-dm-sans text-[12px] font-medium uppercase tracking-[0.15em]
-                         border border-[#D4AF37]/60 text-[#D4AF37]
+                         border border-dm-gold-primary/60 text-dm-gold-primary
                          rounded px-4 py-2
                          transition-all duration-[var(--duration-hover)]
-                         hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]"
+                         hover:bg-dm-gold-primary/10 hover:border-dm-gold-primary"
             >
               {t('contact')}
             </a>
@@ -189,8 +181,8 @@ export default function Navigation() {
       {/* Panel */}
       <aside
         className={`fixed top-0 right-0 z-[45] h-full w-[280px]
-                    bg-black/95 backdrop-blur-xl
-                    border-l border-[#D4AF37]/10
+                    bg-dm-black-deep/95 backdrop-blur-xl
+                    border-l border-dm-gold-primary/10
                     transition-transform duration-500 ease-luxury lg:hidden
                     ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}
         aria-label="Mobile navigation"
@@ -206,8 +198,8 @@ export default function Navigation() {
                              transition-all duration-300
                              ${
                                isActive(href, page)
-                                 ? 'text-[#D4AF37]'
-                                 : 'text-white/75 hover:text-[#D4AF37] hover:ps-2'
+                                 ? 'text-dm-gold-primary'
+                                 : 'text-dm-white-soft hover:text-dm-gold-primary hover:ps-2'
                              }`}
                   style={{
                     animationDelay: mobileOpen ? `${i * 60}ms` : '0ms',
@@ -221,7 +213,7 @@ export default function Navigation() {
 
           <div className="mt-auto flex flex-col gap-5">
             {/* Theme toggle + Language switcher in mobile */}
-            <div className="border-t border-[#D4AF37]/10 pt-5 flex items-center gap-4">
+            <div className="border-t border-dm-gold-primary/10 pt-5 flex items-center gap-4">
               <ThemeToggle />
               <LanguageSwitcher />
             </div>
@@ -232,10 +224,10 @@ export default function Navigation() {
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center gap-2
                          font-dm-sans text-[13px] font-medium uppercase tracking-[0.12em]
-                         border border-[#D4AF37]/60 text-[#D4AF37]
+                         border border-dm-gold-primary/60 text-dm-gold-primary
                          rounded py-3
                          transition-all duration-[var(--duration-hover)]
-                         hover:bg-[#D4AF37]/10"
+                         hover:bg-dm-gold-primary/10"
             >
               {t('contact')}
             </a>

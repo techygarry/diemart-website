@@ -33,7 +33,7 @@ const TOTAL_STEPS = 5;
 function AnimatedCheckmark() {
   return (
     <svg
-      className="mx-auto mb-6"
+      className="mx-auto mb-6 text-dm-gold-primary"
       width="72"
       height="72"
       viewBox="0 0 72 72"
@@ -44,7 +44,7 @@ function AnimatedCheckmark() {
         cx="36"
         cy="36"
         r="33"
-        stroke="#D4AF37"
+        stroke="currentColor"
         strokeWidth="2"
         fill="none"
         className="animate-draw-circle"
@@ -56,7 +56,7 @@ function AnimatedCheckmark() {
       />
       <path
         d="M22 36L32 46L50 28"
-        stroke="#D4AF37"
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -171,20 +171,20 @@ export default function Contact() {
       if (e.key === 'Enter' && !e.shiftKey && step >= 2 && step <= 4 && canAdvance()) {
         e.preventDefault();
         if (step === 3 && !isValidEmail(data.email)) {
-          setEmailError('Please enter a valid email address');
+          setEmailError(t('email_invalid'));
           return;
         }
         goTo(step + 1);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [step, data, goTo],
+    [step, data, goTo, t],
   );
 
   /* ── handle next click ── */
   const handleNext = () => {
     if (step === 3 && !isValidEmail(data.email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('email_invalid'));
       return;
     }
     setEmailError('');
@@ -223,15 +223,20 @@ export default function Contact() {
 
       setSubmitted(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(err instanceof Error ? err.message : t('error_generic'));
     } finally {
       setSubmitting(false);
     }
   };
 
   /* ── WhatsApp link ── */
+  const inquiryLabel = INQUIRY_OPTIONS.includes(
+    data.inquiry_type as (typeof INQUIRY_OPTIONS)[number],
+  )
+    ? t(data.inquiry_type as (typeof INQUIRY_OPTIONS)[number])
+    : data.inquiry_type;
   const waLink = `https://wa.me/917499749770?text=${encodeURIComponent(
-    `Hi Die Mart, I found you on diemart.co.in and I'm interested in ${data.inquiry_type}`,
+    `Hi Die Mart, I found you on diemart.co.in and I'm interested in ${inquiryLabel}`,
   )}`;
 
   /* ── select inquiry type (step 1) ── */
@@ -250,11 +255,11 @@ export default function Contact() {
   /* ────────────────────── THANK YOU SCREEN ────────────────────── */
   if (submitted) {
     return (
-      <section id="contact" className="py-[120px] px-4">
+      <section id="contact" className="py-[120px] px-6" aria-labelledby="contact-thanks-heading">
         <div className="max-w-2xl mx-auto text-center">
           <AnimatedCheckmark />
 
-          <h2 className="font-cormorant font-semibold text-4xl md:text-5xl text-dm-gold-primary mb-4">
+          <h2 id="contact-thanks-heading" className="font-cormorant font-semibold text-4xl md:text-5xl text-dm-gold-primary mb-4">
             {t('thank_you_title')}
           </h2>
 
@@ -283,7 +288,7 @@ export default function Contact() {
 
   /* ────────────────────── FORM ────────────────────── */
   return (
-    <section id="contact" className="py-[120px] px-4" aria-labelledby="contact-heading">
+    <section id="contact" className="py-[120px] px-6" aria-labelledby="contact-heading">
       <div className="max-w-2xl mx-auto">
         {/* ── Section heading ── */}
         <h2 id="contact-heading" className="font-cormorant font-semibold text-4xl md:text-5xl text-dm-gold-primary text-center mb-3">
@@ -311,14 +316,14 @@ export default function Contact() {
               <div className="grid grid-cols-2 gap-4" role="radiogroup" aria-label={t('step1_question')}>
                 {INQUIRY_OPTIONS.map((key) => {
                   const label = t(key);
-                  const selected = data.inquiry_type === label;
+                  const selected = data.inquiry_type === key;
                   return (
                     <button
                       key={key}
                       type="button"
                       role="radio"
                       aria-checked={selected}
-                      onClick={() => selectInquiry(label)}
+                      onClick={() => selectInquiry(key)}
                       className={`p-6 text-center rounded-sm cursor-pointer min-h-[48px]
                                   font-cormorant text-lg transition-all duration-300
                                   ${
@@ -522,6 +527,26 @@ export default function Contact() {
             )}
           </div>
         )}
+      </div>
+
+      {/* Google Maps embed */}
+      <div className="max-w-4xl mx-auto mt-20">
+        <h3 className="font-cormorant font-semibold text-2xl md:text-3xl text-dm-gold-primary text-center mb-6">
+          {t('visit_us')}
+        </h3>
+        <div className="relative w-full aspect-[16/9] rounded-sm overflow-hidden border border-dm-black-light">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.5!2d72.6836367!3d19.8618757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be6dffb0f336e0d%3A0xfd80655a5d8c0033!2sDie%20mart!5e0!3m2!1sen!2sin!4v1"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Die Mart Location"
+            className="absolute inset-0"
+          />
+        </div>
       </div>
     </section>
   );

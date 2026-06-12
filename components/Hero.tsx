@@ -61,8 +61,8 @@ export default function Hero() {
 
   const beatLabel = useTransform(smoothProgress, (v: number): string => {
     if (v < 0.30) return '';
-    if (v < 0.65) return 'THE DIE';
-    return 'YOUR DIE';
+    if (v < 0.65) return t('beat_the_die');
+    return t('beat_your_die');
   });
 
   const textShadowStyle = {
@@ -130,7 +130,7 @@ export default function Hero() {
                   {beatLabel}
                 </motion.span>
                 <span className="font-dm-sans text-[9px] uppercase tracking-[0.15em] text-dm-white-ghost/40">
-                  of 02
+                  {t('beat_of')}
                 </span>
               </div>
             </motion.div>
@@ -190,7 +190,7 @@ export default function Hero() {
             </p>
             <div className="flex items-center gap-2 mt-5" aria-hidden="true">
               <div className="h-px flex-1 bg-gradient-to-r from-[#D4AF37]/30 to-transparent" />
-              <span className="font-cormorant text-xs text-[#D4AF37]/40">3,600+ Designs</span>
+              <span className="font-cormorant text-xs text-[#D4AF37]/40">{t('beat_die_stat')}</span>
             </div>
           </div>
         </motion.div>

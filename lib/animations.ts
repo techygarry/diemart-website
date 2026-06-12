@@ -71,8 +71,6 @@ export function animateHeroOverlay() {
   tl.from('.hero-location', { opacity: 0, y: -20, duration: 0.6, ease: 'power2.out' })
     .from('.hero-title', { opacity: 0, scale: 0.9, duration: 0.8, ease: 'power2.out' }, '-=0.3')
     .from('.hero-tagline', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-    .from('.hero-stats', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' }, '-=0.3')
-    .from('.hero-cta', { opacity: 0, y: 20, duration: 0.5, stagger: 0.15, ease: 'power2.out' }, '-=0.2')
     .from('.hero-established', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.2')
     .from('.hero-scroll-indicator', { opacity: 0, y: -10, duration: 0.6, ease: 'power2.out' }, '-=0.1');
   return tl;
