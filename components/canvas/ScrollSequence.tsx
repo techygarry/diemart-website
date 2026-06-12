@@ -6,13 +6,38 @@ import { useHeroPreload } from '@/lib/preload/HeroPreloadContext';
 
 const TOTAL_FRAMES = 120;
 
+// Tiny blurred version of frame 1, painted instantly while the real frame
+// downloads so the hero never shows a black void.
+const PLACEHOLDER =
+  'data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASoYAA4APtFUpEuoJKOhsAgBABoJZQDDNCFsFqJu9pmwM/KAAP73gM72Z3GebHBB+hkqdWfGzeElYPcCBYRA7lGwwDssMEFySP5EnMtAXPfJgsXD7qKwwYx/PrPsL8gBj55JqSIJd2nlJwtr2gAAAA==';
+
 interface ScrollSequenceProps {
   progress: MotionValue<number>;
 }
 
+function isFrameUsable(img: HTMLImageElement | undefined): img is HTMLImageElement {
+  return !!img && img.complete && img.naturalWidth > 0;
+}
+
 export default function ScrollSequence({ progress: smoothProgress }: ScrollSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { images, framesReady, progress } = useHeroPreload();
+  const { images, firstFrameReady, framesReady, progress } = useHeroPreload();
+
+  // While frames are still streaming in, draw the nearest frame that has
+  // already loaded instead of dropping the draw entirely.
+  const resolveFrame = useCallback(
+    (target: number): HTMLImageElement | null => {
+      if (isFrameUsable(images[target])) return images[target];
+      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+        const below = target - offset;
+        const above = target + offset;
+        if (below >= 0 && isFrameUsable(images[below])) return images[below];
+        if (above < TOTAL_FRAMES && isFrameUsable(images[above])) return images[above];
+      }
+      return null;
+    },
+    [images]
+  );
 
   // Draw frame to canvas based on scroll
   const drawFrame = useCallback(
@@ -21,8 +46,8 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      const img = images[frameIndex];
-      if (!img || !img.complete) return;
+      const img = resolveFrame(frameIndex);
+      if (!img) return;
 
       // Set canvas size to match container
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -34,7 +59,11 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
         ctx.scale(dpr, dpr);
       }
 
-      ctx.clearRect(0, 0, w, h);
+      // Opaque fill (not clearRect) so the letterbox areas around a
+      // `contain`-mode draw stay solid dark instead of exposing the blurred
+      // placeholder behind the canvas.
+      ctx.fillStyle = '#080704';
+      ctx.fillRect(0, 0, w, h);
       const imgAspect = img.naturalWidth / img.naturalHeight;
       const canvasAspect = w / h;
       const isMobileViewport = w < 768;
@@ -62,65 +91,61 @@ export default function ScrollSequence({ progress: smoothProgress }: ScrollSeque
 
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
     },
-    [images]
+    [resolveFrame]
   );
 
-  // Subscribe to smooth scroll progress
+  const frameForProgress = (v: number) =>
+    Math.max(0, Math.min(Math.floor(v * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1));
+
+  // Subscribe to smooth scroll progress as soon as the first frame exists.
+  useEffect(() => {
+    if (!firstFrameReady) return;
+    const unsubscribe = smoothProgress.on('change', (v: number) => {
+      drawFrame(frameForProgress(v));
+    });
+    // Draw the current frame immediately
+    drawFrame(frameForProgress(smoothProgress.get()));
+    return unsubscribe;
+  }, [firstFrameReady, smoothProgress, drawFrame]);
+
+  // Once ALL frames are in, redraw the current position with the exact frame
+  // (the user may be parked on a frame that was only a nearest-match before).
   useEffect(() => {
     if (!framesReady) return;
-    const unsubscribe = smoothProgress.on('change', (v: number) => {
-      const frameIndex = Math.min(
-        Math.floor(v * (TOTAL_FRAMES - 1)),
-        TOTAL_FRAMES - 1
-      );
-      drawFrame(Math.max(0, frameIndex));
-    });
-    // Draw first frame immediately
-    drawFrame(0);
-    return unsubscribe;
+    drawFrame(frameForProgress(smoothProgress.get()));
   }, [framesReady, smoothProgress, drawFrame]);
 
   // Redraw current frame on window resize
   useEffect(() => {
-    if (!framesReady) return;
+    if (!firstFrameReady) return;
     const handleResize = () => {
-      const v = smoothProgress.get();
-      const frameIndex = Math.min(
-        Math.floor(v * (TOTAL_FRAMES - 1)),
-        TOTAL_FRAMES - 1
-      );
-      drawFrame(Math.max(0, frameIndex));
+      drawFrame(frameForProgress(smoothProgress.get()));
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [framesReady, smoothProgress, drawFrame]);
+  }, [firstFrameReady, smoothProgress, drawFrame]);
 
   return (
-    <div className="absolute inset-0 z-10" aria-hidden="true" style={{ background: '#080704' }}>
-      {/* Loading indicator while frames download */}
-      {!framesReady && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-          <p
-            className="font-cormorant-sc text-[28px] md:text-[36px] text-[#D4AF37] tracking-[0.15em] mb-6"
-            style={{ textShadow: '0 2px 20px rgba(212,175,55,0.3)' }}
-          >
-            DIE MART
-          </p>
-          <div className="w-[120px] h-[1px] bg-[#D4AF37]/20 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#D4AF37] transition-[width] duration-300 ease-out"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <p className="font-dm-sans text-[11px] text-[#D4AF37]/50 mt-3 tracking-[0.2em]">
-            {progress}%
-          </p>
+    <div
+      className="absolute inset-0 z-10"
+      aria-hidden="true"
+      style={{
+        background: `#080704 url(${PLACEHOLDER}) center / cover no-repeat`,
+      }}
+    >
+      {/* Unobtrusive hairline while remaining frames stream in */}
+      {firstFrameReady && !framesReady && (
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] z-20 bg-black/40">
+          <div
+            className="h-full bg-[#D4AF37]/50 transition-[width] duration-300 ease-out"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       )}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
-        style={{ opacity: framesReady ? 1 : 0, transition: 'opacity 0.8s ease' }}
+        style={{ opacity: firstFrameReady ? 1 : 0, transition: 'opacity 0.8s ease' }}
       />
     </div>
   );

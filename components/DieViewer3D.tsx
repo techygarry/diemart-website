@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useRef, useMemo } from 'react';
+import { Suspense, useState, useRef, useMemo, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage, useProgress, Html } from '@react-three/drei';
@@ -18,14 +18,15 @@ const MODELS = [
   { id: 'kairi', labelKey: 'kairi_die', file: '/models/kairi.stl' },
 ];
 
-/* ─────────────────── Background Preload ─────────────────── */
-// Actively fetch STL files + HDR environment map as soon as this module loads.
-// Uses fetch() for higher priority than <link rel="prefetch">.
-// Files land in the browser HTTP cache so they're instant when the viewer mounts.
-if (typeof window !== 'undefined') {
-  const HDR_URL =
-    'https://raw.githubusercontent.com/pmndrs/drei-assets/456060a26bbeb8fdf79326f224b6d99b8bcce736/hdri/potsdamer_platz_1k.hdr';
-  [HDR_URL, ...MODELS.map((m) => m.file)].forEach((url) => {
+// Self-hosted so the CSP doesn't need third-party CDN domains.
+const HDR_FILE = '/hdri/potsdamer_platz_1k.hdr';
+
+/* ─────────────────── Deferred Preload ─────────────────── */
+// Warm the HTTP cache for the active model + HDR, but only once the section is
+// near the viewport. The models total ~26 MB — fetching them at module load
+// competed with the hero frame sequence and made first paint dramatically slower.
+function prefetchViewerAssets() {
+  [HDR_FILE, ...MODELS.map((m) => m.file)].forEach((url) => {
     fetch(url, { priority: 'low' } as RequestInit).catch(() => {});
   });
 }
@@ -100,9 +101,36 @@ function STLModel({ url }: { url: string }) {
 export default function DieViewer3D() {
   const t = useTranslations('viewer3d');
   const [activeModel, setActiveModel] = useState(0);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Mount the WebGL canvas (and start asset downloads) only when the section
+  // is within ~800px of the viewport, so the landing page stays light.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      prefetchViewerAssets();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          prefetchViewerAssets();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
+      ref={sectionRef}
       id="viewer"
       className="relative py-[100px] bg-dm-black-deep overflow-hidden"
     >
@@ -172,42 +200,50 @@ export default function DieViewer3D() {
             </span>
           </div>
 
-          <WebGLErrorBoundary>
-            <Canvas
-              shadows
-              dpr={[1, 2]}
-              camera={{ position: [0, 2, 6], fov: 40 }}
-              gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
-            >
-              <color attach="background" args={['#0a0908']} />
-              <fog attach="fog" args={['#0a0908', 8, 20]} />
+          {inView ? (
+            <WebGLErrorBoundary>
+              <Canvas
+                shadows
+                dpr={[1, 2]}
+                camera={{ position: [0, 2, 6], fov: 40 }}
+                gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.2 }}
+              >
+                <color attach="background" args={['#0a0908']} />
+                <fog attach="fog" args={['#0a0908', 8, 20]} />
 
-              <Suspense fallback={<Loader />}>
-                <Stage
-                  intensity={0.6}
-                  environment="city"
-                  shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
-                  adjustCamera={false}
-                >
-                  <STLModel
-                    key={MODELS[activeModel].file}
-                    url={MODELS[activeModel].file}
-                  />
-                </Stage>
-              </Suspense>
+                <Suspense fallback={<Loader />}>
+                  <Stage
+                    intensity={0.6}
+                    environment={{ files: HDR_FILE }}
+                    shadows={{ type: 'contact', opacity: 0.4, blur: 2 }}
+                    adjustCamera={false}
+                  >
+                    <STLModel
+                      key={MODELS[activeModel].file}
+                      url={MODELS[activeModel].file}
+                    />
+                  </Stage>
+                </Suspense>
 
-              <OrbitControls
-                enablePan={false}
-                enableZoom={true}
-                minDistance={3}
-                maxDistance={12}
-                autoRotate
-                autoRotateSpeed={1.5}
-                maxPolarAngle={Math.PI / 1.8}
-                minPolarAngle={Math.PI / 6}
-              />
-            </Canvas>
-          </WebGLErrorBoundary>
+                <OrbitControls
+                  enablePan={false}
+                  enableZoom={true}
+                  minDistance={3}
+                  maxDistance={12}
+                  autoRotate
+                  autoRotateSpeed={1.5}
+                  maxPolarAngle={Math.PI / 1.8}
+                  minPolarAngle={Math.PI / 6}
+                />
+              </Canvas>
+            </WebGLErrorBoundary>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+              <div className="w-32 h-[2px] bg-[#1a1a1a] rounded-full overflow-hidden">
+                <div className="h-full w-1/4 bg-[#D4AF37]/40 animate-pulse" />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Bottom info bar */}
