@@ -7,6 +7,14 @@ import { getSupabase } from '@/lib/supabase';
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
 
+// Must match INQUIRY_OPTIONS in components/Contact.tsx.
+const ALLOWED_INQUIRY_TYPES = new Set([
+  'option_bangle',
+  'option_decorative',
+  'option_custom',
+  'option_general',
+]);
+
 const rateLimitMap = new Map<string, number[]>();
 
 // Periodically purge stale entries so the map doesn't grow forever.
@@ -72,9 +80,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!inquiry_type) {
+    if (typeof inquiry_type !== 'string' || !ALLOWED_INQUIRY_TYPES.has(inquiry_type)) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Invalid inquiry type' },
         { status: 400 }
       );
     }
