@@ -6,9 +6,9 @@ export function generateMetadata({
 }: {
   params: { locale: string };
 }): Metadata {
-  return pageMetadata(locale, 'about');
+  return pageMetadata(locale, 'viewer');
 }
 
-export default function AboutLayout({ children }: { children: React.ReactNode }) {
+export default function ViewerLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

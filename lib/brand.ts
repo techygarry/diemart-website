@@ -105,28 +105,218 @@ export const NAV_LINKS = [
 ] as const;
 
 export const SEO = {
-  title: 'Die Mart \u2014 Jewellery Die Manufacturers | Chinchani, Tarapur, Maharashtra',
-  description: 'Die Mart is a jewellery die manufacturer based in Chinchani, Tarapur, Maharashtra. 3,600+ designs, 10 Lakh+ dies manufactured, 3 factories, 100+ karigars. Specialists in bangle progressive cutting dies.',
+  title: 'Die Mart \u2014 Jewellery Die Manufacturer | Bangle Dies & Die Moulds | Chinchani, Tarapur, Maharashtra',
+  description: 'Die Mart is a jewellery die (die mould) manufacturer in Chinchani, Tarapur, Dist. Palghar, Maharashtra, India. Bangle dies, flower dies, cutting & emboss dies, custom dies. 3,600+ designs, 10 Lakh+ dies manufactured, 3 factories, 100+ karigars. Specialists in bangle progressive cutting dies.',
   canonical: 'https://diemart.co.in',
+  keywords: [
+    'jewellery die',
+    'jewelry die',
+    'die mould',
+    'die mold',
+    'bangle die',
+    'bangle die manufacturer',
+    'jewellery die manufacturer India',
+    'jewellery die maker Maharashtra',
+    'die manufacturer Chinchani',
+    'die manufacturer Tarapur',
+    'die manufacturer Palghar',
+    'gold jewellery die',
+    'flower die',
+    'emboss die',
+    'cutting die',
+    'thappad die',
+    'custom jewellery die',
+    'CNC wirecut die',
+  ],
+  ogImage: {
+    url: 'https://diemart.co.in/logo.png',
+    width: 665,
+    height: 375,
+    alt: 'Die Mart \u2014 Jewellery Die Manufacturer, Chinchani, Tarapur, Maharashtra',
+  },
   foundingDate: '2022',
   jsonLd: {
     '@context': 'https://schema.org',
-    '@type': 'ManufacturingBusiness',
-    name: 'Die Mart',
-    url: 'https://diemart.co.in',
-    foundingDate: '2022',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Chinchani, Tarapur',
-      addressRegion: 'Maharashtra',
-      addressCountry: 'IN',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'sales',
-      url: 'https://wa.me/917499749770',
-    },
-    sameAs: ['https://instagram.com/die_mart_/'],
+    '@graph': [
+      {
+        '@type': 'ManufacturingBusiness',
+        '@id': 'https://diemart.co.in/#business',
+        name: 'Die Mart',
+        alternateName: ['DieMart', 'Die Mart India', 'Die Mart Chinchani'],
+        description:
+          'Die Mart is a jewellery die manufacturer (die mould maker) based in Chinchani, Tarapur, Dist. Palghar, Maharashtra, India. Specialists in bangle progressive cutting dies. Products include bangle dies, flower dies, thappad dies, cutting dies, emboss dies and custom jewellery dies. 3 factories, 100+ karigars, a design archive of 3,600+ dies and over 10 lakh dies manufactured. Serving India, the Middle East and Europe.',
+        url: 'https://diemart.co.in',
+        logo: 'https://diemart.co.in/logo.png',
+        image: 'https://diemart.co.in/logo.png',
+        telephone: '+917499749770',
+        foundingDate: '2022',
+        founder: { '@type': 'Person', name: 'Elyas Nagavadria' },
+        slogan: 'The Die Behind Every Jewellery',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Chinchani, Tarapur',
+          addressLocality: 'Chinchani, Dist. Palghar',
+          addressRegion: 'Maharashtra',
+          addressCountry: 'IN',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 19.874,
+          longitude: 72.684,
+        },
+        areaServed: ['India', 'Middle East', 'Europe'],
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+          ],
+          opens: '06:00',
+          closes: '22:00',
+        },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          telephone: '+917499749770',
+          url: 'https://wa.me/917499749770',
+          availableLanguage: ['English', 'Hindi'],
+        },
+        sameAs: [
+          'https://instagram.com/die_mart_/',
+          'https://wa.me/917499749770',
+        ],
+        knowsAbout: [
+          'jewellery die manufacturing',
+          'die moulds',
+          'bangle dies',
+          'bangle progressive cutting dies',
+          'CNC wirecut machining',
+          'jewellery embossing',
+        ],
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Jewellery Die Catalog',
+          itemListElement: [
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Bangle Die',
+                category: 'Jewellery Die',
+                description:
+                  'Precision-cut bangle dies for every diameter and pattern, including bangle progressive cutting dies.',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Flower Die',
+                category: 'Jewellery Die',
+                description:
+                  'Decorative jewellery dies with intricate floral patterns \u2014 lotus, mogra and more.',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Thappad Die',
+                category: 'Jewellery Die',
+                description:
+                  'High-force flat press dies for bold geometric patterns and statement jewellery.',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Cutting Die',
+                category: 'Jewellery Die',
+                description:
+                  'Sharp-edge precision cutting dies for intricate cutwork and filigree designs.',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Emboss Die',
+                category: 'Jewellery Die',
+                description:
+                  'Relief-work emboss dies that add three-dimensional depth and texture to jewellery.',
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Product',
+                name: 'Custom Die',
+                category: 'Jewellery Die',
+                description:
+                  'Bespoke jewellery dies manufactured to exact specifications with 7-day turnaround.',
+              },
+            },
+          ],
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://diemart.co.in/#website',
+        name: 'Die Mart',
+        url: 'https://diemart.co.in',
+        publisher: { '@id': 'https://diemart.co.in/#business' },
+        inLanguage: ['en', 'hi', 'ar'],
+      },
+      {
+        '@type': 'ItemList',
+        '@id': 'https://diemart.co.in/#products',
+        name: 'Jewellery Die Types Manufactured by Die Mart',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Bangle Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Flower Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Thappad Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'Cutting Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+          {
+            '@type': 'ListItem',
+            position: 5,
+            name: 'Emboss Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+          {
+            '@type': 'ListItem',
+            position: 6,
+            name: 'Custom Die',
+            url: 'https://diemart.co.in/en/products',
+          },
+        ],
+      },
+    ],
   },
 } as const;
 

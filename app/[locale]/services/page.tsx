@@ -391,7 +391,7 @@ export default function ServicesPage() {
                 {/* Gold top line on hover */}
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-dm-gold-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-[0.6s] ease-luxury" aria-hidden="true" />
                 {/* Left gold accent bar */}
-                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
+                <div className="absolute top-0 start-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
                 <div className="p-8 ps-10">
                   <div className="mb-5 transition-transform duration-[0.5s] ease-luxury group-hover:scale-105">
                     <RulerIcon />
@@ -411,7 +411,7 @@ export default function ServicesPage() {
               {/* Card 2: 40+ Years Experience */}
               <article className="why-card group relative bg-dm-black-mid border border-dm-black-light rounded-sm overflow-hidden transition-all duration-[0.6s] ease-luxury hover:border-dm-gold-primary/30">
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-dm-gold-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-[0.6s] ease-luxury" aria-hidden="true" />
-                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
+                <div className="absolute top-0 start-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
                 <div className="p-8 ps-10">
                   <div className="mb-5 transition-transform duration-[0.5s] ease-luxury group-hover:scale-105">
                     <ClockIcon />
@@ -431,7 +431,7 @@ export default function ServicesPage() {
               {/* Card 3: On-Time Delivery */}
               <article className="why-card group relative bg-dm-black-mid border border-dm-black-light rounded-sm overflow-hidden transition-all duration-[0.6s] ease-luxury hover:border-dm-gold-primary/30">
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-dm-gold-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-[0.6s] ease-luxury" aria-hidden="true" />
-                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
+                <div className="absolute top-0 start-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
                 <div className="p-8 ps-10">
                   <div className="mb-5 transition-transform duration-[0.5s] ease-luxury group-hover:scale-105">
                     <DispatchIcon />
@@ -451,7 +451,7 @@ export default function ServicesPage() {
               {/* Card 4: Custom Solutions */}
               <article className="why-card group relative bg-dm-black-mid border border-dm-black-light rounded-sm overflow-hidden transition-all duration-[0.6s] ease-luxury hover:border-dm-gold-primary/30">
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-dm-gold-primary origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-[0.6s] ease-luxury" aria-hidden="true" />
-                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
+                <div className="absolute top-0 start-0 w-[3px] h-full bg-gradient-to-b from-dm-gold-primary/60 via-dm-gold-primary/20 to-transparent" aria-hidden="true" />
                 <div className="p-8 ps-10">
                   <div className="mb-5 transition-transform duration-[0.5s] ease-luxury group-hover:scale-105">
                     <GearIcon />
@@ -484,7 +484,7 @@ export default function ServicesPage() {
         {/*  CLIENTS TRUST US — Social Proof                           */}
         {/* ========================================================== */}
         <section
-          className="relative py-[100px] md:py-[140px] bg-dm-black-deep overflow-hidden"
+          className="relative py-[100px] md:py-[120px] bg-dm-black-deep overflow-hidden"
         >
           {/* Deep radial glow */}
           <div

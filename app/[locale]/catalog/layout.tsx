@@ -6,9 +6,9 @@ export function generateMetadata({
 }: {
   params: { locale: string };
 }): Metadata {
-  return pageMetadata(locale, 'about');
+  return pageMetadata(locale, 'catalog');
 }
 
-export default function AboutLayout({ children }: { children: React.ReactNode }) {
+export default function CatalogLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

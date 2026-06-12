@@ -297,7 +297,8 @@ export default function GlobalReach() {
   return (
     <section
       id="global"
-      className="relative py-[100px] bg-dm-black-warm"
+      className="relative py-[120px] bg-dm-black-warm"
+      aria-labelledby="global-heading"
     >
       {/* Background glow */}
       <div
@@ -315,7 +316,7 @@ export default function GlobalReach() {
           <p className="font-dm-sans font-light uppercase tracking-[0.3em] text-dm-gold-muted text-base md:text-lg mb-5">
             {t('label')}
           </p>
-          <h2 className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight">
+          <h2 id="global-heading" className="font-cormorant font-semibold text-5xl md:text-6xl lg:text-7xl text-dm-gold-primary mb-6 leading-tight">
             {t('heading')}
           </h2>
           <p className="font-cormorant text-dm-white-soft text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed">
@@ -378,7 +379,7 @@ export default function GlobalReach() {
                 onMouseLeave={() => setHoveredCountry(null)}
               >
                 <div className="flex items-center gap-4 mb-3">
-                  <span className="text-3xl">{stat.flag}</span>
+                  <span className="text-3xl" aria-hidden="true">{stat.flag}</span>
                   <h3 className="font-cormorant font-semibold text-2xl text-dm-gold-primary">
                     {t(stat.countryKey)}
                   </h3>

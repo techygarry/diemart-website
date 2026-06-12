@@ -44,7 +44,7 @@ export default function Footer() {
               href={`/${locale}`}
               className="inline-block"
             >
-              <img src="/logo.png" alt="Die Mart" className="h-12 w-auto" />
+              <img src="/logo.png" alt="Die Mart" width={665} height={375} className="h-12 w-auto" />
             </a>
             <p className="mt-3 font-cormorant text-base italic text-dm-white-ghost leading-relaxed">
               {tFooter('tagline')}
